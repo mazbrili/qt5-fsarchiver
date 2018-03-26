@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
- * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ *
+ * Copyright (C) 2008-2016 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -630,3 +630,16 @@ int get_path_to_volume(char *newvolbuf, int bufsize, char *basepath, long curvol
     return 0;
 }
 
+s64 get_device_size(char *partition)
+{
+    s64 devsize;
+    int fd;
+
+    if ((fd=open64(partition, O_RDONLY|O_LARGEFILE))<0)
+        return -1;
+    if ((devsize=lseek64(fd, 0, SEEK_END))<0)
+        return -1;
+    close(fd);
+
+    return devsize;
+}

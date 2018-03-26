@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
  * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ * Copyright (C) 2008-2018 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/sysmacros.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <uuid.h>
@@ -191,4 +192,5 @@ int reiser4_get_reqmntopt(char *partition, cstrlist *reqopt, cstrlist *badopt)
 
     return 0;
 }
+
 

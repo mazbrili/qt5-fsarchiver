@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -50,6 +50,9 @@ extern int fsarchiver_aufruf(int argc, char *anlage0=NULL, char
 *anlage10=NULL, char *anlage11=NULL, char *anlage12=NULL, char 
 *anlage13=NULL, char *anlage14=NULL);
 QStringList filters;
+QStringList items_zstd_dir;
+QString zip_dir_[11];
+int zstd_level_dir;
 
 
 DialogDIR::DialogDIR(QWidget *parent)
@@ -61,6 +64,7 @@ DialogDIR::DialogDIR(QWidget *parent)
         connect( chk_key, SIGNAL( clicked() ), this, SLOT(chkkey()));
         connect( pushButton_break, SIGNAL( clicked() ), this, SLOT( esc_end() ) ); 
         connect( chk_hidden, SIGNAL( clicked() ), this, SLOT(chkhidden()));
+        connect( pushButton_zstd_dir, SIGNAL( clicked() ), this, SLOT(zip_einlesen_dir()));
         timer = new QTimer(this);
         dirModel = new QFileSystemModel;
    	selModel = new QItemSelectionModel(dirModel);
@@ -85,44 +89,75 @@ DialogDIR::DialogDIR(QWidget *parent)
         treeView_dir->setModel(model);
         treeView_dir->setRootIndex(model->index(QDir::rootPath()));
 */
+        items_zstd_dir << "1" << "2" << "3" << "4" <<  "5" << "6" << "7" << "8" << "9" << "10" << "11" << "12" << "13" << "14" << "15" << "16" <<  "17" << "18" << "19" << "20" << "21" << "22";
+        cmb_zstd_dir->addItems (items_zstd_dir);
+        items_zstd_dir.clear();
         items_dir_kerne << "1" << "2" << "3" << "4" <<  "5" << "6" << "7" << "8" ;
    	cmb_kerne->addItems (items_dir_kerne);
    	items_dir_kerne.clear();
-        items << "lzo" << tr("gzip fast") << tr("gzip standard") << tr("qzip best") <<  tr("bzip2 fast");
+        zip_dir_[0]=(tr("lz4", "lz4"));
+        zip_dir_[1]=(tr("lzo", "lzo"));
+        zip_dir_[2]=(tr("gzip fast","gzip fast"));
+        zip_dir_[3]=(tr("gzip standard","gzip standard"));
+        zip_dir_[4]=(tr("qzip best","qzip best"));
+        zip_dir_[5]=(tr("bzip2 fast","bzip2 fast"));
+        zip_dir_[6]=(tr("bzip2 good"," bzip2 good"));
+        zip_dir_[7]=(tr("lzma fast","lzma fast"));
+        zip_dir_[8]=(tr("lzma medium","lzma medium"));
+        zip_dir_[9]=(tr("lzma best","lzma best"));
+        zip_dir_[10]=(tr("zstd","zstd"));
+        items << zip_dir_[0] << zip_dir_[1] << zip_dir_[2] << zip_dir_[3] <<  zip_dir_[4];
         cmb_zip->addItems (items);
-  	items.clear();
-        items << tr("bzip2 good") << tr("lzma fast") << tr("lzma medium") << tr("lzma best");
+        items.clear();
+        items << zip_dir_[5] << zip_dir_[6] << zip_dir_[7] << zip_dir_[8] << zip_dir_[9] << zip_dir_[10];
         cmb_zip->addItems (items);
         items.clear();
         // Ini-Datei auslesen
         QString homepath = QDir::homePath();
         QFile file(homepath + "/.config/qt5-fsarchiver/qt5-fsarchiver.conf");
-        if (file.exists()) {
-   	   QSettings setting("qt5-fsarchiver", "qt5-fsarchiver");
+        QSettings setting("qt5-fsarchiver", "qt5-fsarchiver");
+        if (file.exists()) 
+        {
            setting.beginGroup("Basiseinstellungen");
            int auswertung = setting.value("Kompression").toInt();
-           cmb_zip -> setCurrentIndex(auswertung); 
+           cmb_zip -> setCurrentIndex(auswertung);
+           if (auswertung ==10)
+              cmb_zstd_dir->setEnabled(true);
+           else
+              cmb_zstd_dir->setEnabled(false);  
            auswertung = setting.value("Kerne").toInt();
            cmb_kerne -> setCurrentIndex(auswertung-1); 
            auswertung = setting.value("overwrite").toInt();
+           auswertung = setting.value("overwrite").toInt();
            if (auswertung ==1)
-           	chk_overwrite->setChecked(Qt::Checked); 
-           auswertung = setting.value("place").toInt();
+              chk_overwrite->setChecked(Qt::Checked); 
+           auswertung = setting.value("pbr").toInt();
            if (auswertung ==1)
-           	chk_path->setChecked(Qt::Checked);  
-           auswertung = setting.value("key").toInt();
+              chk_key->setChecked(Qt::Checked); 
+	   auswertung = setting.value("hidden").toInt();
            if (auswertung ==1)
-           	chk_key->setChecked(Qt::Checked); 
-           auswertung = setting.value("hidden").toInt();
+              chk_hidden->setChecked(Qt::Checked);
+              auswertung = setting.value("Passwort").toInt(); 
            if (auswertung ==1)
-           	chk_hidden->setChecked(Qt::Checked); 
-           	setting.endGroup();
+              lineKey ->setEchoMode(QLineEdit::Normal);
+           else
+	       lineKey ->setEchoMode(QLineEdit::Password);
+           zstd_level_dir = setting.value("zstd").toInt();
+           cmb_zstd_dir -> setCurrentIndex(zstd_level_dir-1);
+           auswertung = setting.value("Kompression").toInt();
+           if (auswertung ==10)
+               cmb_zstd_dir->setEnabled(true);
+           else
+               cmb_zstd_dir->setEnabled(false);
+           setting.endGroup(); 
         } 
         else { 
                 cmb_kerne -> setCurrentIndex(0);
         	chk_path->setChecked(Qt::Checked);
         	chk_overwrite->setChecked(Qt::Checked); 
-        	cmb_zip -> setCurrentIndex(2); 
+        	cmb_zip -> setCurrentIndex(2);
+                cmb_zstd_dir -> setCurrentIndex(9);
+                cmb_zstd_dir->setEnabled(false);
         	} 
         chkkey();
         pid_ermitteln();
@@ -138,8 +173,6 @@ DialogDIR::DialogDIR(QWidget *parent)
             chk_path->setEnabled(false);
             chk_overwrite->setEnabled(true);
             cmb_zip->setEnabled(true);
-            
-            cmb_zip -> setCurrentIndex(2);
             label_4->setEnabled(true);
             label_5->setEnabled(true);
             AnzahlsaveFile->setEnabled(true);
@@ -225,13 +258,23 @@ Qt::CheckState state1;
             }
         parameter[0] = "fsarchiver";
        	parameter[1] = "savedir"; 
-        zip = cmb_zip->currentIndex()+1;
-        compress = QString::number(zip);
-        compress = "-z" + compress; 
-        if (zip == -1)
-            parameter[2] = "-z3";
-        else
-            parameter[2] = compress; 
+        zip = cmb_zip->currentIndex();
+                                if (zip < 10)
+                                {
+                                compress = QString::number(zip);
+                                compress = "-z" + compress;
+                                parameter[2] = compress;
+                                if (zip == -1)
+                                   parameter[2] = "-z3";
+                                else
+                                parameter[2] = compress; 
+                                }
+                                if (zip == 10)
+                                   {
+                                   int zstd = cmb_zstd_dir->currentIndex()+1;
+                                   compress = "-Z" + QString::number(zstd_level_dir);
+                                   parameter[2] = compress;
+                                }
         int kerne = cmb_kerne->currentIndex()+1;
         QString index = QString::number(kerne);
         if (index == "0")
@@ -757,6 +800,15 @@ void DialogDIR::chkhidden(){
        	dirModel->setNameFilters(filters); 
        	}
 }
+
+void DialogDIR::zip_einlesen_dir() {
+int zip = cmb_zip->currentIndex();
+    if (zip == 10) 
+       cmb_zstd_dir->setEnabled(true);
+    else
+       cmb_zstd_dir->setEnabled(false);
+}
+
 
 
 

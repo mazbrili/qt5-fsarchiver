@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -65,11 +65,12 @@ int minute_elapsed;
 int sekunde_summe;
 QStringList items_kerne_;
 QStringList items_GB;
+QStringList items_zstd;
 QString partition_typ_;
 QString partition_typ;
 
 QString part_art;
-QString zip_[10];
+QString zip_[11];
 QString SicherungsDateiName;
 QString SicherungsFolderFileName;
 int dummy_prozent;
@@ -83,6 +84,7 @@ QString pid, pid1;
 QString befehl_pbr;
 int stopFlag;
 int row_1;
+int zstd_level;
 
 extern "C"
 {
@@ -134,7 +136,6 @@ MWindow::MWindow()
    treeView->setModel(dirModel);
    treeView->setSelectionModel(selModel);
    treeView->setEnabled(true);
-   
    QModelIndex cwdIndex = dirModel->index(QDir::rootPath());
    dirModel->setRootPath(QDir::rootPath());
    treeView->setRootIndex(cwdIndex);
@@ -164,7 +165,8 @@ MWindow::MWindow()
    //connect( pushButton_end, SIGNAL( clicked() ), this, SLOT(close()));	
    connect( pushButton_save, SIGNAL( clicked() ), this, SLOT(savePartition()));
    connect( pushButton_restore, SIGNAL( clicked() ), this, SLOT(restorePartition()));
-   // pushButton_partition und pushButton_folder sind dummy Button um einen Slot ansprechen zu können
+   // pushButton_partition, pushButton_folder und pushButton_zstd sind dummy Button um einen Slot ansprechen zu können
+   connect( pushButton_zstd, SIGNAL( clicked() ), this, SLOT(zip_einlesen())); 
    connect( pushButton_partition, SIGNAL( clicked() ), this, SLOT(listWidget_auslesen()));
    connect( pushButton_folder, SIGNAL( clicked() ), this, SLOT(folder_einlesen()));
    connect( rdBt_saveFsArchiv, SIGNAL( clicked() ), this, SLOT(rdButton_auslesen()));
@@ -184,21 +186,27 @@ MWindow::MWindow()
    items_GB << "2" << "4" << "4,7";
    cmb_GB->addItems (items_GB);
    items_GB.clear();
-   zip_[0]=(tr("lzo", "lzo"));
-   zip_[1]=(tr("gzip fast","gzip fast"));
-   zip_[2]=(tr("gzip standard","gzip standard"));
-   zip_[3]=(tr("qzip best","qzip best"));
-   zip_[4]=(tr("bzip2 fast","bzip2 fast"));
-   zip_[5]=(tr("bzip2 good"," bzip2 good"));
-   zip_[6]=(tr("lzma fast","lzma fast"));
-   zip_[7]=(tr("lzma medium","lzma medium"));
-   zip_[8]=(tr("lzma best","lzma best"));
+   items_zstd << "1" << "2" << "3" << "4" <<  "5" << "6" << "7" << "8" << "9" << "10" << "11" << "12" << "13" << "14" << "15" << "16" <<  "17" << "18" << "19" << "20" << "21" << "22";
+   cmb_zstd->addItems (items_zstd);
+   items_zstd.clear();
+   zip_[0]=(tr("lz4", "lz4"));
+   zip_[1]=(tr("lzo", "lzo"));
+   zip_[2]=(tr("gzip fast","gzip fast"));
+   zip_[3]=(tr("gzip standard","gzip standard"));
+   zip_[4]=(tr("qzip best","qzip best"));
+   zip_[5]=(tr("bzip2 fast","bzip2 fast"));
+   zip_[6]=(tr("bzip2 good"," bzip2 good"));
+   zip_[7]=(tr("lzma fast","lzma fast"));
+   zip_[8]=(tr("lzma medium","lzma medium"));
+   zip_[9]=(tr("lzma best","lzma best"));
+   zip_[10]=(tr("zstd","zstd"));
    items << zip_[0] << zip_[1] << zip_[2] << zip_[3] <<  zip_[4];
    cmb_zip->addItems (items);
    items.clear();
-   items << zip_[5] << zip_[6] << zip_[7] << zip_[8];
+   items << zip_[5] << zip_[6] << zip_[7] << zip_[8] << zip_[9] << zip_[10];
    cmb_zip->addItems (items);
    items.clear();
+   
    QDir dir1(homepath + "/.config/qt5-fsarchiver");
    if (!dir1.exists()){
       befehl = "mkdir " + homepath + "/.config/qt5-fsarchiver 2>/dev/null" ;
@@ -213,17 +221,16 @@ MWindow::MWindow()
    if (!dir.exists()){
        befehl = "mkdir " + homepath + "/.qt5-fs-client 2>/dev/null" ;
        system (befehl.toLatin1().data());
-   	//Rechte setzen
+   }	//vorsichtshalber Rechte immer neu setzen
        befehl = "chmod a+rwx " + homepath + "/.qt5-fs-client 2>/dev/null";
        system (befehl.toLatin1().data());
    // wegen Suse
-   QDir dir2("/media");
+   QDir dir3("/media");
    QString media = "/media";
-   if (!dir2.exists()){
+   if (!dir3.exists()){
        befehl = "mkdir " + media + " 2>/dev/null" ;
        system (befehl.toLatin1().data());
        }
-   }
    // beim Abbruch einer Sicherung bleiben eventuell Daten in /tmp/fsa erhalten.
    // Bei ersten Start werden eventuell vorhandene Dateien gelöscht.
    // Beim Öffnen einer weiteren Instanz von qt5-fsarchiver, darf /tmp/fsa keinenfalls gelöscht werden.
@@ -260,7 +267,15 @@ MWindow::MWindow()
         if (auswertung ==1)
            	lineKey ->setEchoMode(QLineEdit::Normal);
         else
-		     lineKey ->setEchoMode(QLineEdit::Password); 
+		     lineKey ->setEchoMode(QLineEdit::Password);
+        
+        zstd_level = setting.value("zstd").toInt();
+        cmb_zstd -> setCurrentIndex(zstd_level-1);
+        auswertung = setting.value("Kompression").toInt();
+        if (auswertung ==10)
+            cmb_zstd->setEnabled(true);
+        else
+            cmb_zstd->setEnabled(false); 
         setting.endGroup();
         } 
    else {
@@ -275,6 +290,8 @@ MWindow::MWindow()
         setting.setValue("sshfs",1); 
         setting.setValue("dummy",2);
         setting.endGroup();
+        cmb_zstd -> setCurrentIndex(7);
+        cmb_zstd->setEnabled(false);
         }
    label_4->setEnabled(false);
    chk_overwrite->setEnabled(true);
@@ -303,7 +320,7 @@ MWindow::MWindow()
            while (j > 1)
 	   {
 		j = widget[i+1].length();
-      partition_ = part[i][0]; // z.B. sda1
+                partition_ = part[i][0]; // z.B. sda1
 		UUID = part[i][3];
                 partition_typ = part[i][1];
                 pos = partition_typ.indexOf("fat");
@@ -483,8 +500,10 @@ int MWindow::savePartition()
      char * part_;
      int err = 0;
      QString keyText = "";
+     QString compress = "";
      int found = 0; 
      int zip;
+     int zip_zstd;
 
      indicator_reset();
      if (rdBt_saveFsArchiv->isChecked())
@@ -531,9 +550,7 @@ int MWindow::savePartition()
          char  dev_[50] = "/dev/";
 	 strcat (dev_ , part_);  // String zusammenfügen: dev_  = dev_ + part_
 	 int liveFlag = 0;
-         zip = cmb_zip->currentIndex()+1;
-         if (zip==0) 
-            zip = 1; 
+         zip = cmb_zip->currentIndex();
          QString dummy = partition_;
 	 // Werte sammeln und nach file_dialog übergeben, Partition ist eingehängt
          part_art = mtab_einlesen("/dev/" + partition_);
@@ -587,14 +604,19 @@ int MWindow::savePartition()
                                 keyText = lineKey->text();
                                 parameter[0] = "fsarchiver";
        				parameter[1] = "savefs"; 
-                                zip = cmb_zip->currentIndex()+1;
-                                QString compress = QString::number(zip);
+                                zip = cmb_zip->currentIndex();
+                                zip_zstd = cmb_zstd->currentIndex() +1;
+                                if (zip < 10)
+                                {
+                                compress = QString::number(zip);
                                 compress = "-z" + compress;
-		                if (zip == 0)
-            				parameter[2] = "-z3"; 
-        			else  {
-            				parameter[2] = compress;
-                                      }
+                                parameter[2] = compress;
+                                }
+                                if (zip == 10)
+                                   {
+                                   compress = "-Z" + QString::number(zip_zstd);
+                                   parameter[2] = compress;
+                                }
                                 int kerne = cmb_kerne->currentIndex()+1;
                                 QString index = QString::number(kerne);
                                 if (index == "0")
@@ -701,6 +723,7 @@ int MWindow::savePartition()
              			}
    
 //qDebug() << "Befehl" << parameter[0] << parameter[1] << parameter[2] << parameter[3] << parameter[4] << parameter[5] << parameter[6] << parameter[7] << parameter[8] << indizierung + 2;
+
 				thread1.setValues(indizierung + 2,"0"); 
                                 pushButton_end->setEnabled(false);  
                                 pushButton_save->setEnabled(false); 
@@ -1067,7 +1090,15 @@ void MWindow::listWidget_auslesen() {
 QString MWindow::UUID_auslesen(int row){
     UUID = part[row][3]; 
     return part[row][3];
-}	
+}
+
+void MWindow::zip_einlesen() {
+int zip = cmb_zip->currentIndex();
+    if (zip == 10) 
+       cmb_zstd->setEnabled(true);
+    else
+       cmb_zstd->setEnabled(false);
+}
 
 void MWindow::folder_einlesen() {
    QModelIndex index = treeView->currentIndex();
@@ -1083,8 +1114,8 @@ void MWindow::folder_file() {
 void MWindow::info() {
    QMessageBox::information(
       0, tr("qt5-fsarchiver"),
-      tr("Backup and restore partitions, directory and MBR.\nversion 0.8.1-0, February 5, 2017",
-         "Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.1-0, 5. Februar 2017"));
+      tr("Backup and restore partitions, directory and MBR.\nversion 0.8.4-0, April 10, 2018",
+         "Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018"));
       }
 
 int MWindow::Root_Auswertung(){
@@ -1572,7 +1603,8 @@ QString MWindow::beschreibungstext(QString partitiontext, QString text, int zip,
 FileDialog filedialog; //Create the main widget; 
 //int row;
 float prozent;
-float compress_[10];
+float compress_[11];
+float compress_zstd[23];
 QString part_size_;
 QString part_size_compress;
 float part_size;
@@ -1581,18 +1613,49 @@ float free_part_size;
 QString Linuxversion;
 QString ubuntu_root;
 QString ubuntu_home;
-QString compress = zip_[zip - 1];
+QString compress = zip_[zip];
 QString mount_point;
 QString kernel;
-compress_[0] = 0.46;  //lzo
-compress_[1] = 0.39;  //gzip fast
-compress_[2] = 0.37;  //gzip standard
-compress_[3] = 0.365;  //gzip best
-compress_[4] = 0.36;  //bzip2 fast
-compress_[5] = 0.355;  //bzip2 good
-compress_[6] = 0.35; //lzma fast
-compress_[7] = 0.322; //lzma medium
-compress_[8] = 0.32; //lzma best
+compress_[0] = 0.54;  //lz4
+compress_[1] = 0.55;  //lzo
+compress_[2] = 0.46;  //gzip fast
+compress_[3] = 0.44;  //gzip standard
+compress_[4] = 0.42;  //gzip best
+compress_[5] = 0.41;  //bzip2 fast
+compress_[6] = 0.40;  //bzip2 good
+compress_[7] = 0.40; //lzma fast
+compress_[8] = 0.38; //lzma medium
+compress_[9] = 0.37; //lzma best
+
+
+compress_zstd[1] = 0.44;  //Z1
+compress_zstd[2] = 0.44;  
+compress_zstd[3] = 0.44;  
+compress_zstd[4] = 0.43;  
+compress_zstd[5] = 0.43;  
+compress_zstd[6] = 0.42;  
+compress_zstd[7] = 0.42;
+compress_zstd[8] = 0.41; 
+compress_zstd[9] = 0.41; 
+compress_zstd[10] = 0.41;  
+compress_zstd[11] = 0.41;  
+compress_zstd[12] = 0.41;  
+compress_zstd[13] = 0.41;  
+compress_zstd[14] = 0.41;  
+compress_zstd[15] = 0.41;  
+compress_zstd[16] = 0.41;  
+compress_zstd[17] = 0.40; 
+compress_zstd[18] = 0.40; 
+compress_zstd[19] = 0.39; 
+compress_zstd[20] = 0.39;  
+compress_zstd[21] = 0.39;  
+compress_zstd[22] = 0.39;  //Z22
+
+int zstd = cmb_zip->currentIndex();
+int zip_zstd = cmb_zstd->currentIndex() +1;
+QString zip_zstd_ = QString::number(zip_zstd);
+if  (zstd == 10)
+    compress = compress + " level:" + zip_zstd_;
         SicherungsDateiName = text;
 	partition_ = widget[row];
 	mount_point = mountpoint(partitiontext);
@@ -1604,7 +1667,10 @@ compress_[8] = 0.32; //lzma best
         // Gesamter Bereich der Partition
        	part_size = freesize(partitiontext.toLatin1().data(), mount_point.toLatin1().data(), 2);
         part_size_ =  format(part_size);
-        free_part_size = free_part_size * compress_[zip - 1];
+if  (zstd == 10)
+        free_part_size = free_part_size * compress_zstd[zip_zstd];
+else
+        free_part_size = free_part_size * compress_[zip];
         part_size_compress = format(free_part_size);
         text = tr("Backup file name: ", "Sicherungsdateiname: ") + text + "\n" + 
 	tr("Partition  name: ", "Partitionsname: ")  
@@ -1996,6 +2062,8 @@ void MWindow::del_mediafolder()
            qApp->quit();
           //close ();
 }
+
+
 
 
 

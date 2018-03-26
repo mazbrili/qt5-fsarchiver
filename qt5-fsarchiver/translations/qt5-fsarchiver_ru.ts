@@ -2644,10 +2644,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mainWindow.cpp" line="1086"/>
 <source>Backup and restore partitions, directory and MBR.
-version 0.8.1-0, February 5, 2017</source>
+version 0.8.4-0, April 10, 2018</source>
         <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
 <translation>Сохранение и восстановление разделов, каталогов и MBR.
-Версия 0.8.1-0, 5.февраль 2017</translation>
+Версия 0.8.4-0, 10.апрель 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1172"/>

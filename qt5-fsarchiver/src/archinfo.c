@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
- * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ *
+ * Copyright (C) 2008-2016 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -38,6 +38,8 @@ char *compalgostr(int algo)
         case COMPRESS_GZIP:    return "gzip";
         case COMPRESS_BZIP2:   return "bzip2";
         case COMPRESS_LZMA:    return "lzma";
+	case COMPRESS_LZ4:     return "lz4";
+        case COMPRESS_ZSTD:    return "zstd";
         default:               return "unknown";
     }
 }
@@ -61,7 +63,7 @@ int archinfo_show_mainhead(carchreader *ai, cdico *dicomainhead)
         return -1;
     }
     
-   printf("====================== archive information ======================\n"); 
+    printf("====================== archive information ======================\n"); 
    printf( "Archive type: \t\t\t%s\n", (ai->archtype==ARCHTYPE_FILESYSTEMS)?"filesystems":"flat files"); 
     if ((ai->archtype==ARCHTYPE_FILESYSTEMS)) 
         printf("Filesystems count: \t%ld\n", (long)ai->fscount); 
@@ -144,4 +146,3 @@ int archinfo_show_fshead(cdico *dicofshead, int fsid)
     
     return 0;
 }
-

@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -245,7 +245,7 @@ Qt::CheckState state;
      // Partition aus folder_clone extrahieren
          pos = folder_clone.indexOf("-gz.part");
          if (pos > -1)
-             part_name = folder_clone.mid(pos-15,4);
+             part_name = folder_clone.mid(pos-14,4);
          pos = folder_clone.indexOf("-part");
          if (pos > -1)
              part_name = folder_clone.mid(pos-15,4);
@@ -258,6 +258,7 @@ Qt::CheckState state;
                tr(" does not coincide with the saved  ", " stimmt nicht mit der gesicherten ") + img_partition_clone + tr(" Do you want to continue restore?", " überein. Wollen Sie trotzdem die Wiederherstellung durchführen?"));
                if (pos == 2)  //nicht wiederherstellen
                   return 0;
+// Image wiederherstellung nicht ausführen
     // Überprüfen, ob System oder Home-Partition auf der Festplatte vorhanden ist
     int part_art_clone = mountpoint(img_partition_clone);
     if (part_art_clone == 1){
@@ -1167,6 +1168,7 @@ int pos = 0;
 
 
         
+
 
 
 

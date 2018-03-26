@@ -1,21 +1,15 @@
-=================================================================================================================================
 qt5-fsarchiver: Back up and restore partitions for Debian,Ubuntu, Linux-Mint, Suse and Fedora [http://wiki.ubuntuusers.de/qt4-fsarchiver]
-=================================================================================================================================
 
-Copyright (C) 2008-2016 Francois Dupoux and Dieter Baum.  All rights reserved.
+Copyright (C) 2008-2018 Francois Dupoux and Dieter Baum.  All rights reserved.
 Copying the files is permitted with or without modifications. The code is without warranty of any kind. Use at your own risk.
 
 François Dupoux has developed the basic program fsarchiver, Hihin Ruslan has improved the program and tranlate to englisch und russian. Michael R. Lawrence and his team translated to Spanish and Italian, Zhenneng Li translated to Chinese, Dieter Baum created the GUI and the code to use the GUI.
 
-# qt5-fsarchiver
-The Program qt5-fsarchiver is the translation from qt4-fsarchiver 
-to the Qt5 environment. 
+qt4-fsarchiver was translated QT5 environment and renamed in QT5-fsarchiver.
 
+qt5-fsarchiver a program with a graphical interface for easy operation the archiving program fsarchiver.
 qt5 fsarchiver program was extended with these points:
 Backup and restore partition table, HD cloning, images of hard drives and partitions write and restore.
-
-qt5-fsarchiver save and restore partitions, directories, MBR/GPT, 
-Clone partitions and  make Images. 
 
 The source code can be installed on any Debian-based system on Suse and Fedora.
 For Debian, Ubuntu and Linux Mint are deb packages for Suse and Fedora rpm packages are available.
@@ -23,12 +17,14 @@ For Debian, Ubuntu and Linux Mint are deb packages for Suse and Fedora rpm packa
 Installing the program from the source files:
 To install qt5-fsarchiver the necessary dependencies for fsarchiver and the qt5 development environment must be installed.
 Of Debian based distributions: This is the command:
-sudo apt-get install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu
+sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev
  
-The command for Suse: (you must be an administrator su -l) zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server
+The command for Suse: (you must be an administrator su -l) zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server lz4-devel
 If you use ssh (secure shell) want to access other computers in the network, you still need to install individually sshpass.
 
-The command for Fedora: (you must be an administrator su -l) yum install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel   e2fsprogs-devel libblkid-devel libattr-devel qt5-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils
+The command for Fedora: (you must be an administrator su -l) yum install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel   e2fsprogs-devel libblkid-devel libattr-devel qt5-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel 
+For a 64-bit system, you must also install lrelease: dnf install qt5-linguist.x86-64
+For a 32-bit system, the command is: dnf install qt5-linguist.i686
 yum install was replaced from Fedora22 by dnf install.
 
 You change in the terminal to the folder qt5-fsarchiver (extracted from the sources).
@@ -38,14 +34,16 @@ This is the command to install the program with Debian8, Ubuntu 16.04 32-bit and
 In Debian you must instead sudo make install this: su -l, make install
 
 This is the command for Fedora and Suse: qmake-qt5 && make && sudo make install.
-Before you can compile the program in Fedora, you must copy file lrelease from /usr/lib64/qt4/bin/ to /usr/lib64/qt5/bin/ 
 
 Installing the program from the DEB packages:
 A double click on the deb file installs the program.
 If the installation is unsuccessful you enter this command in a terminal(you must be administrator): dpkg -i qt5-fsarchiver-0.6.19-19.deb. The version number needs to be adjusted.
-In Ubuntu 4.16 the double is not working. The correct command is: sudo apt-get install qt5-fsarchiver-0.6.19-19.deb.
+In Ubuntu 4.16 the double is not working. The correct command is: sudo apt install qt5-fsarchiver-0.6.19-19.deb.
 In Debian8 is this the command: gpk-install-local-file qt5-fsarchiver-0.6.19-19.deb. The version number needs to be adjusted.
-Is in Debian8 gpk is not installed, then you must enter: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt-get install -f. The output of dpkg error message can be ignored.
+Is in Debian8 gpk is not installed, then you must enter: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt install -f. The output of dpkg error message can be ignored.
+
+qt5-fsarchiver does not work with Wayland. You must start your distributions with the X server.
+This problem affects provisionally all programs with a graphical interface that require root privileges.
 
 Program call:
 Partial starters are installed. By double-qt5-fsarchiver is started.
@@ -53,6 +51,7 @@ Start qt5-fsarchiver in a terminal:
 
 Debian: Type in the terminal: gksu /usr/sbin/qt5-fsarchiver.
 Gnome: /usr/sbin/qt5-fsarchiver_polkit %f oder gksu qt5-fsarchiver.
+Fedora Gnome: beesu qt5-fsarchiver.
 KDE: kdesu qt5-fsarchiver oder kdesudo qt5-fsarchiver. 
 XFCE,Unity,MATE,Cinnamon,LXDE: gksu qt5-fsarchiver.
 gksu may need to be installed.
@@ -60,7 +59,7 @@ Always the program call functions from a root terminal (su -l): /usr/sbin/qt5-fs
 
 Note for Ubuntu: The surface has Ubuntu 10.10 is no longer adapted Gnome. 
 Adaptability: Command for the terminal: gksudo qtconfig. Under Appearance > GUI Style you choose GTK+. Save the change and closed the Qt-Configuration. 
-Because of problems with the installation of qt5-qtconfig from the Ubuntu sources, qt5-qtconfig no longer installed with the deb package. qt5-qtconfig must be manually installed. Usually helps with the installation of qt5-qtconfig from the Ubuntu sources when the first command is entered sudo apt-get update in the terminal.
+Because of problems with the installation of qt5-qtconfig from the Ubuntu sources, qt5-qtconfig no longer installed with the deb package. qt5-qtconfig must be manually installed. Usually helps with the installation of qt5-qtconfig from the Ubuntu sources when the first command is entered sudo apt update in the terminal.
 
 The handling of qt5-fsarchiver is simple:
 
@@ -109,7 +108,7 @@ qt5-fsarchiver  can back up and restore with ecryptfs encrypted home directories
 
 With TrueCrypt encrypted partitions can not be backed up.
 
-Securing a Windows FAT partitions is only possible as Image.(Actions>HD-Image built and restore) However, it can be stored on a FAT partition. The backup file will be split if the file size is greater than 4GB.
+Securing and restore Windows FAT partitions is with Version 0.8.0.5 and later possible. It can be stored on a FAT partition. The backup file will be split if the file size is greater than 4GB.
 
 Clone hard drive: You choose in the left list box, select the existing drive that is to be cloned, and the right list box, the hard drive, which is to be rebuilt. Click on the button "Clone disk".
 Image of the hard disk/partition create:
@@ -122,3 +121,5 @@ qt5-fsarchiver can be started multiple times. So it is possible for instance to 
 
 Further information can be found in the german websites and http://wiki.ubuntuusers.de/qt5-fsarchiver http://wiki.ubuntuusers.de/fsarchiver.
 You can get information about fsarchiver on the English website of fsarchiver http://www.fsarchiver.org/Main_Page.
+
+

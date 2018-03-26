@@ -1,6 +1,16 @@
 ===========================================================================================================
 * qt5-fsarchiver: Graphical interface for fsarchiver fsarchiver [http://wiki.ubuntuusers.de/qt4-fsarchiver] 
 ===========================================================================================================
+*  qt5-fsarchiver-0.8.3-0 April 10, 2018.
+     - Added support for zstd compression algorithm (New option -Z, from 1 to 22)
+*  qt5-fsarchiver-0.8.3-0 January 15, 2018.
+     - Implemented LZ4 compression (Contribution from Cristian Vazquez).
+*  qt5-fsarchiver-0.8.2-0 January 2, 2018.
+     - Add support for the latest ext4 filesystem features.
+     - Improved support of large block device when restoring extfs filesystems.
+*  qt5-fsarchiver-0.8.1-1 April 28, 2017.
+     - Troubleshooting Working with ntfs Partitions.
+     - Windows 10 System partition can not be backed up.
 *  qt5-fsarchiver-0.8.1-0 February 5, 2017.
      - Improved support for XFS filesystem (contributions from Marcos Mello)
      -  Updated documentation and comments in the sources (Marcos Mello)

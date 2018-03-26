@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
  * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ * Copyright (C) 2008-2018 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/sysmacros.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <uuid.h>
@@ -34,6 +35,7 @@
 #include "filesys.h"
 #include "strlist.h"
 #include "error.h"
+#include "connect_c_cpp.h"
 
 int btrfs_check_compatibility(u64 compat, u64 incompat, u64 ro_compat)
 {
@@ -60,6 +62,10 @@ int btrfs_mkfs(cdico *d, char *partition, char *fsoptions, char *mkfslabel, char
     u64 compat_ro_flags;
     int exitst;
     u64 temp64;
+    int i = btrfs_flag_uebergeben(); 
+    	if (i == 1) 
+		return 0; 
+   
     
     // ---- get original filesystem features (if the original filesystem was a btrfs)
     if (dico_get_u64(d, 0, FSYSHEADKEY_BTRFSFEATURECOMPAT, &compat_flags)!=0 ||
@@ -221,4 +227,5 @@ int btrfs_get_reqmntopt(char *partition, cstrlist *reqopt, cstrlist *badopt)
     strlist_add(badopt, "noacl");
     return 0;
 }
+
 

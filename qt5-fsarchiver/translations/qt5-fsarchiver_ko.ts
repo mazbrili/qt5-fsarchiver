@@ -2970,10 +2970,10 @@ Die Dateiendung muss .fsa sein</comment>
     <message>
         <location filename="../src/mainWindow.cpp" line="1086"/>
 <source>Backup and restore partitions, directory and MBR.
-version 0.8.1-0, February 5, 2017</source>
+version 0.8.4-0, April 10, 2018</source>
         <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
 <translation>백업 및 복원, 디렉터리 파티션과 MBR
-버전 0.8.1-0, 2017년 2월월 5일</translation>
+버전 0.8.4-0, 2018년 4 월월 10일</translation>
 </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1094"/>

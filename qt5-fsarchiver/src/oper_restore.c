@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
  * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ * Copyright (C) 2008-2018 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -67,6 +67,7 @@ long long anzahlfile;
 	float progress; 
 	int zeitflag = 0;
 	int symlink_ = 0;
+
 // returns true if this file of a parent directory has been excluded
 int is_filedir_excluded(char *relpath)
 {
@@ -172,7 +173,8 @@ int convert_argv_to_strdicos(cstrdico *dicoargv[], int argc, char *cmdargv[])
 int extractar_listing_print_file(cextractar *exar, int objtype, char *relpath)
 {
     char strprogress[256];
-       
+   // s64 progress;
+    
     memset(strprogress, 0, sizeof(strprogress));
     if (exar->cost_global>0)
     {
@@ -182,8 +184,10 @@ int extractar_listing_print_file(cextractar *exar, int objtype, char *relpath)
     }
     msgprintf(MSG_VERB1, "-[%.2d]%s[%s] %s\n", exar->fsid, strprogress, get_objtype_name(objtype), relpath);
     // Terminal Ausgabe 
+    // Terminal Ausgabe 
     	printf("       %.0f%%       \r ", progress); 
 	werte_uebergeben(progress,1);
+	  
     return 0;
 }
 
@@ -220,6 +224,7 @@ int extractar_restore_attr_xattr(cextractar *exar, u32 objtype, char *fullpath, 
         {  sysprintf("winattr:lsetxattr(%s,%s) failed\n", relpath, xattrname); 
 	symlink_ = symlink_ + 1; 
             werte_uebergeben (symlink_,16);
+         
             ret=-1;
         }
         else // success
@@ -263,6 +268,7 @@ int extractar_restore_attr_windows(cextractar *exar, u32 objtype, char *fullpath
         {
             sysprintf("winattr:lsetxattr(%s,%s) failed\n", relpath, xattrname);
             ret=-1;
+           
         }
         else // success
         {
@@ -519,7 +525,7 @@ int extractar_restore_obj_devfile(cextractar *exar, char *fullpath, char *relpat
         goto extractar_restore_obj_devfile_err;
     if (mknod(fullpath, mode, dev)!=0)
     {   sysprintf("mknod failed on [%s]\n", relpath);
-        werte_uebergeben (107,4); 
+         werte_uebergeben (107,4); 
         goto extractar_restore_obj_devfile_err;
     }
     if (extractar_restore_attr_everything(exar, objtype, fullpath, relpath, d)!=0)
@@ -1164,7 +1170,7 @@ int extractar_read_mainhead(cextractar *exar, cdico **dicomainhead)
         passlen=(g_options.encryptpass==NULL)?(0):(strlen((char*)g_options.encryptpass));
         if ((g_options.encryptpass==NULL) || (passlen<FSA_MIN_PASSLEN) || (passlen>FSA_MAX_PASSLEN))
         {   errprintf("you have to provide the password which was used to create archive, no password given on the command line\n");
-            werte_uebergeben (103,4); 
+             werte_uebergeben (103,4); 
             return -1;
         }
         
@@ -1173,7 +1179,7 @@ int extractar_read_mainhead(cextractar *exar, cdico **dicomainhead)
         
         if (memcmp(md5sumar, md5sumnew, 16)!=0)
         {   errprintf("you have to provide the password which was used to create archive, cannot decrypt the test buffer.\n");
-            werte_uebergeben (103,4); 
+            werte_uebergeben (107,4); 
             return -1;
         }
     }
@@ -1227,19 +1233,19 @@ int extractar_filesystem_extract(cextractar *exar, cdico *dicofs, cstrdico *dico
         (int)FSA_VERSION_GET_B(curver), (int)FSA_VERSION_GET_C(curver), (int)FSA_VERSION_GET_D(curver));
     msgprintf(MSG_VERB2, "Minimum fsarchiver version for that filesystem: %d.%d.%d.%d\n", (int)FSA_VERSION_GET_A(minver), 
         (int)FSA_VERSION_GET_B(minver), (int)FSA_VERSION_GET_C(minver), (int)FSA_VERSION_GET_D(minver));
-    if (curver < minver)
+    /*if (curver < minver)
     {   errprintf("This filesystem can only be restored with fsarchiver %d.%d.%d.%d or more recent\n",
         (int)FSA_VERSION_GET_A(minver), (int)FSA_VERSION_GET_B(minver), (int)FSA_VERSION_GET_C(minver),
         (int)FSA_VERSION_GET_D(minver));
-        return -1;
-    }
+       // return -1;
+    }*/
     
     // check the partition is not mounted
     res=generic_get_mntinfo(partition, &readwrite, mntbuf, sizeof(mntbuf), optbuf, sizeof(optbuf), fsbuf, sizeof(fsbuf));
     if (res==0)
     {   errprintf("partition [%s] is mounted on [%s].\ncannot restore an archive to a partition "
             "which is mounted, unmount it first: umount %s\n", partition, mntbuf, mntbuf);
-            werte_uebergeben (105,4); 
+         werte_uebergeben (105,4);    
         return -1;
     }
     
@@ -1375,7 +1381,7 @@ int oper_restore(char *archive, int argc, char **argv, int oper)
     int ret=0;
     int i;
     //Terminal Ausgabe 
-   printf("[ prozentualer Anteil ]  \n");
+    printf("[ prozentualer Anteil ]  \n");
     
     // init
     memset(&exar, 0, sizeof(exar));
@@ -1465,14 +1471,14 @@ int oper_restore(char *archive, int argc, char **argv, int oper)
         case ARCHTYPE_DIRECTORIES:
             if (oper==OPER_RESTFS)
             {   errprintf("this archive does not contain filesystems, cannot use \"restfs\". Try \"restdir\" instead.\n");
-                werte_uebergeben (102,4); 
+                 werte_uebergeben (102,4); 
                 goto do_extract_error;
             }
             break;
         case ARCHTYPE_FILESYSTEMS:
             if (oper==OPER_RESTDIR)
             {   errprintf("this archive does not contain simple directories, cannot use \"restdir\". Try \"restfs\" instead.\n");
-                werte_uebergeben (104,4); 
+                 werte_uebergeben (104,4); 
                 goto do_extract_error;
             }
             break;
@@ -1621,8 +1627,8 @@ do_extract_success:
     // now we are sure that thread_compress is not working on an item in the queue so we can empty the queue
     while (get_secthreads()>0 && queue_get_end_of_queue(&g_queue)==false)
         queue_destroy_first_item(&g_queue);
-        // Damit die wiederholte Wiederherstellung der Verzeichnisse und Partitionen klappt!!
-	set_stopfillqueue_false();
+         // Damit die wiederholte Wiederherstellung der Verzeichnisse und Partitionen klappt!!
+	     set_stopfillqueue_false();
     msgprintf(MSG_DEBUG1, "THREAD-MAIN2: queue is now empty\n");
     // the queue is empty, so thread_compress should now exit
     
@@ -1654,4 +1660,5 @@ do_extract_success:
     archreader_destroy(&exar.ai);
     return ret;
 }
+
 

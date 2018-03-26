@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -33,7 +33,7 @@ using namespace std;
 
 extern int dialog_auswertung;
 extern int btrfs_flag;
-QString zip_net[10];
+QString zip_net[11];
 QString folder_net;
 QString file_net;
 QString folder_free;
@@ -48,7 +48,6 @@ QString part_art_net;
 QString user_net;
 QString key_net;
 QString rechner_IP;
-extern int show_flag;
 extern QString parameter[15];
 int endeThread_net;
 QString SicherungsDateiName_net;
@@ -71,12 +70,14 @@ extern int fsarchiver_aufruf(int argc, char *anlage0=NULL, char
 *anlage10=NULL, char *anlage11=NULL, char *anlage12=NULL, char 
 *anlage13=NULL, char *anlage14=NULL);
 QStringList items_Net;
+QStringList items_zstd_net;
 QString pfad_back;
 QString pfad_forward;
 int backFlag;
 int cmbFlag = 0;
 int listwidgetrow = 0;
 QString folder_dir_net;
+int zstd_level_net;
 
 DialogNet::DialogNet(QWidget *parent)
 {
@@ -97,6 +98,7 @@ setupUi(this); // this sets up GUI
         treeView_dir->setModel(dirModel);
         treeView_dir->setSelectionModel(selModel);
    	treeView_dir->setRootIndex(cwdIndex);
+        connect( pushButton_zstd_net, SIGNAL( clicked() ), this, SLOT(zip_einlesen_net())); 
         connect( chk_path, SIGNAL( clicked()), this, SLOT(rdButton_auslesen()));
       	connect( pushButton_end, SIGNAL( clicked() ), this, SLOT(end()));
         connect( pushButton_save, SIGNAL( clicked() ), this, SLOT(savePartition()));
@@ -129,19 +131,24 @@ setupUi(this); // this sets up GUI
         items_kerne_ << "1" << "2" << "3" << "4" <<  "5" << "6" << "7" << "8" << "9" << "10" << "11" << "12";
    	cmb_kerne->addItems (items_kerne_);
    	items_kerne_.clear();
-   	zip_net[0]= tr("lzo");
-   	zip_net[1]= tr("gzip fast");
-   	zip_net[2]= tr("gzip standard");
-   	zip_net[3]= tr("qzip best");
-   	zip_net[4]= tr("bzip2 fast");
-   	zip_net[5]= tr("bzip2 good");
-   	zip_net[6]= tr("lzma fast");
-   	zip_net[7]= tr("lzma medium");
-   	zip_net[8]= tr("lzma best");
+        items_zstd_net << "1" << "2" << "3" << "4" <<  "5" << "6" << "7" << "8" << "9" << "10" << "11" << "12" << "13" << "14" << "15" << "16" <<  "17" << "18" << "19" << "20" << "21" << "22";
+        cmb_zstd_net->addItems (items_zstd_net);
+        items_zstd_net.clear();
+   	zip_net[0]= tr("lz4");
+        zip_net[1]= tr("lzo");
+   	zip_net[2]= tr("gzip fast");
+   	zip_net[3]= tr("gzip standard");
+   	zip_net[4]= tr("qzip best");
+   	zip_net[5]= tr("bzip2 fast");
+   	zip_net[6]= tr("bzip2 good");
+   	zip_net[7]= tr("lzma fast");
+   	zip_net[8]= tr("lzma medium");
+   	zip_net[9]= tr("lzma best");
+        zip_net[10]=(tr("zstd","zstd"));
    	items << zip_net[0] << zip_net[1] << zip_net[2] << zip_net[3] <<  zip_net[4];
    	cmb_zip->addItems (items);
    	items.clear();
-   	items << zip_net[5] << zip_net[6] << zip_net[7] << zip_net[8];
+   	items << zip_net[5] << zip_net[6] << zip_net[7] << zip_net[8] << zip_net[9] << zip_net[10];
    	cmb_zip->addItems (items);
    	items.clear();
         chkkey();
@@ -196,6 +203,13 @@ setupUi(this); // this sets up GUI
         } 
    	else
 		lineKey ->setEchoMode(QLineEdit::Password);
+        zstd_level_net = setting.value("zstd").toInt();
+        cmb_zstd_net -> setCurrentIndex(zstd_level_net-1);
+        auswertung = setting.value("Kompression").toInt();
+        if (auswertung ==10)
+            cmb_zstd_net->setEnabled(true);
+        else
+            cmb_zstd_net->setEnabled(false); 
         setting.endGroup();
         } 
    else {
@@ -205,6 +219,8 @@ setupUi(this); // this sets up GUI
         chk_Beschreibung->setChecked(Qt::Checked);
         chk_overwrite->setChecked(Qt::Checked); 
         cmb_zip -> setCurrentIndex(2);
+        cmb_zstd_net -> setCurrentIndex(7);
+        cmb_zstd_net->setEnabled(false);
         }
     
     	label_4->setEnabled(false);
@@ -313,7 +329,6 @@ QString homepath = QDir::homePath();
 		system (befehl.toLatin1().data()); 
        } 
        cmbFlag = 0;
-       show_flag = 0;
        close(); 
 }
 
@@ -332,6 +347,7 @@ void DialogNet:: Daten_NFS_eintragen()
    	key_net = netein.key_holen();
         //freigegebene Ordner ermitteln
         int i = nfs_search_folder_free(rechner_IP); 
+qDebug() << "Rechner IP" << rechner_IP;
    	if ( i==1){
         	QMessageBox::about(this,tr("Note", "Hinweis"),
         tr("Can not find a shared directory with the NFS Protokoll.\n", "Mit dem NFS Protokoll wurde kein freigegebenes Verzeichnis gefunden.\n"));
@@ -497,7 +513,7 @@ QString homepath = QDir::homePath();
      int net_art = cmb_Net->currentIndex();
      int found = 0;
      int stop = 0;
-     show_flag = 1;
+     QString compress = "";
      if (rdBt_saveFsArchiv->isChecked())
      {
      	if (folder_free == "")
@@ -560,9 +576,9 @@ this->setCursor(Qt::ArrowCursor);
         return 1;}
          _Datum_net = window.Zeit_auslesen();
          state = chk_Beschreibung->checkState();
-         zip = cmb_zip->currentIndex()+1;
-         if (zip == 0)
-             zip = 1;
+         zip = cmb_zip->currentIndex();
+         if (zip == -1)
+            zip = 3;
          int liveFlag = 0;
          int row;
          char  dev_[50] = "/dev/";
@@ -629,14 +645,19 @@ this->setCursor(Qt::ArrowCursor);
        			 	           parameter[1] = "savefs"; 
                          if (rdBt_showDirectories->isChecked())
                                 parameter[1] = "savedir"; 
-                         zip = cmb_zip->currentIndex()+1;
-                         QString compress = QString::number(zip);
-                         compress = "-z" + compress;
-		         if (zip == 0)
-            		       parameter[2] = "-z3"; 
-        		 else  {
-            			parameter[2] = compress;
-                               }
+                         zip = cmb_zip->currentIndex();
+                                if (zip < 10)
+                                {
+                                compress = QString::number(zip);
+                                compress = "-z" + compress;
+                                parameter[2] = compress;
+                                }
+                                if (zip == 10)
+                                   {
+                                   int zstd = cmb_zstd_net->currentIndex()+1;
+                                   compress = "-Z" + QString::number(zstd_level_net);   
+                                   parameter[2] = compress;
+                                }
                          int kerne = cmb_kerne->currentIndex()+1;
                          QString index = QString::number(kerne);
                          if (index == "0")
@@ -726,7 +747,7 @@ this->setCursor(Qt::ArrowCursor);
                 		      }
                 	 }
 				   }
-                       
+// qDebug() << "Befehl" << parameter[0] << parameter[1] << parameter[2] << parameter[3] << parameter[4] << parameter[5] << parameter[6] << parameter[7] << parameter[8] << indizierung + 2;                      
 				thread1.setValues(indizierung + 2,"0");
                                 pushButton_save->setEnabled(false);
                                 pushButton_end->setEnabled(false); 
@@ -1564,7 +1585,6 @@ void DialogNet::esc_end()
 {
 MWindow window;
 QString befehl;
-show_flag = 0;
    if (thread_run_net > 0) {
     int ret = questionMessage(tr("Do you want really break the save or restore from the partition?", "Wollen Sie wirklich die Sicherung oder Wiederherstellung der Partition beenden?"));
       if (thread_run_net == 1 && ret == 1)
@@ -1906,6 +1926,16 @@ QString homepath = QDir::homePath();
 	 return 1;
       return 0;
  }
+
+void DialogNet::zip_einlesen_net() {
+int zip = cmb_zip->currentIndex();
+    if (zip == 10) 
+       cmb_zstd_net->setEnabled(true);
+    else
+       cmb_zstd_net->setEnabled(false);
+}
+
+
 
 
 

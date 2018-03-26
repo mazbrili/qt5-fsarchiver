@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -89,6 +89,7 @@ protected slots:
    void del_mediafolder();
    void clone_save();
    void clone_save_net();
+   void zip_einlesen(); 
      
 private:
     QFileSystemModel *dirModel;
@@ -107,6 +108,7 @@ private slots:
      
 };
 #endif
+
 
 
 

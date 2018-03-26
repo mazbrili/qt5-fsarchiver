@@ -40,6 +40,9 @@
 /* Define to 1 if you have the `lutimes' function. */
 #define HAVE_LUTIMES 1
 
+/* Define to 1 if you have the <lz4.h> header file. */
+#define HAVE_LZ4_H 1
+
 /* Define to 1 if you have the <lzo/lzo1x.h> header file. */
 #define HAVE_LZO_LZO1X_H 1
 
@@ -109,17 +112,23 @@
 /* Define to 1 if you have the <zlib.h> header file. */
 #define HAVE_ZLIB_H 1
 
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
+/* Define to 1 if you have the <zstd.h> header file. */
+#define HAVE_ZSTD_H 1
 
 /* Define to 1 to enable options for development */
 /* #undef OPTION_DEVEL_SUPPORT */
+
+/* Define to 1 to enable the support for lz4 compression */
+#define OPTION_LZ4_SUPPORT 1
 
 /* Define to 1 to enable the support for lzma compression */
 #define OPTION_LZMA_SUPPORT 1
 
 /* Define to 1 to enable the support for lzo compression */
 #define OPTION_LZO_SUPPORT 1
+
+/* Define to 1 to enable the support for zstd compression */
+#define OPTION_ZSTD_SUPPORT 1
 
 /* Define to 1 if OS is Linux */
 #define OS_LINUX 1
@@ -137,25 +146,28 @@
 #define PACKAGE_NAME "fsarchiver"
 
 /* Define the date of the release */
-#define PACKAGE_RELDATE "2010-01-31"
+#define PACKAGE_RELDATE "2018-02-19"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "fsarchiver 0.6.7"
+#define PACKAGE_STRING "fsarchiver 0.8.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "fsarchiver"
 
+/* Define to the home page for this package. */
+#define PACKAGE_URL ""
+
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.6.7"
+#define PACKAGE_VERSION "0.8.4"
 
 /* Major version number */
 #define PACKAGE_VERSION_A 0
 
 /* Medium version number */
-#define PACKAGE_VERSION_B 6
+#define PACKAGE_VERSION_B 8
 
 /* Minor version number */
-#define PACKAGE_VERSION_C 7
+#define PACKAGE_VERSION_C 4
 
 /* Patch version number */
 #define PACKAGE_VERSION_D 0
@@ -164,10 +176,15 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.6.7"
+#define VERSION "0.8.4"
+
+/* Enable large inode numbers on Mac OS X 10.5.  */
+#ifndef _DARWIN_USE_64_BIT_INODE
+# define _DARWIN_USE_64_BIT_INODE 1
+#endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
-#define _FILE_OFFSET_BITS 64
+/* #undef _FILE_OFFSET_BITS */
 
 /* Define for large files, on AIX-style hosts. */
 /* #undef _LARGE_FILES */

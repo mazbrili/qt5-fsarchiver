@@ -3196,10 +3196,10 @@ Los archivos deben terminar al fsa</translation>
     <message>
         <location filename="../src/mainWindow.cpp" line="1086"/>
 <source>Backup and restore partitions, directory and MBR.
-version 0.8.1-0, February 5, 2017</source>
+version 0.8.4-0, April 10, 2018</source>
         <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
 <translation>Copia de seguridad y restauración de particiones, directorios y MBR.
-versione 0.8.1-0, 5.Febrero 2017</translation>
+versione 0.8.4-0, 10.Abril 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1486"/>

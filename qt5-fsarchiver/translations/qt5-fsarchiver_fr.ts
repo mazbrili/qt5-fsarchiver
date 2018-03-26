@@ -2982,9 +2982,9 @@ Die Dateiendung muss .fsa sein</comment>
 <message>
     <location filename="../src/mainWindow.cpp" line="1086"/>
 <source>Backup and restore partitions, directory and MBR.
-version 0.8.1-0, February 5, 2017</source>
+version 0.8.4-0, April 10, 2018</source>
 <translation>sauvegarde et de restauration des répertoires de partition et MBR.
-Version 0.8.1-0, Februari 2017 5. </translation>
+Version 0.8.4-0, Avril 2018 10. </translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1094"/>

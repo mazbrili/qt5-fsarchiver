@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -304,7 +304,6 @@ QString hidden_size_;
         QFile file(Dateiname);
         QFileInfo info(Dateiname); 
         size_ = info.size();  //Wenn Dateigröße = 0 ist verhindert diese Abfrage einen Abstaurz
-qDebug() << "befehl" << befehl << size_;
         if (size_ == 0){
            QMessageBox::about(this, tr("Note", "Hinweis"), tr("Mistake. The partition table can not be read. The program is terminated", "Fehler. Die Partitionstabelle kann nicht ausgelesen werden. Das Programm wird abgebrochen.\n")); 
            return 1;
@@ -492,6 +491,7 @@ int DialogMBR::is_gpt(QString partition_efi)
    	file.close();
   return 0;
 }
+
 
 
 

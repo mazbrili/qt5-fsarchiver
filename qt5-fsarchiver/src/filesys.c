@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
  * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ * Copyright (C) 2008-2018 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -27,6 +27,7 @@
 #include <sys/utsname.h>
 #include <sys/mount.h>
 #include <sys/types.h>
+#include <sys/sysmacros.h>
 #include <errno.h>
 #include <uuid.h>
 
@@ -348,4 +349,5 @@ char *format_prog_version(u64 version, char *bufdat, int buflen)
     snprintf(bufdat, buflen, "%ld.%ld.%ld", (long)(version>>16&0xFF), (long)(version>>8&0xFF), (long)(version>>0&0xFF));
     return bufdat;
 }
+
 

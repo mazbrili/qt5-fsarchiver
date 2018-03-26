@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -62,6 +62,7 @@ protected slots:
         void save_directories();
         void chkhidden();
         int archinfo(QString archname);
+        void zip_einlesen_net();
 
 private:
         Thread thread1;
@@ -92,6 +93,7 @@ private slots:
 };
 
 #endif
+
 
 
 

@@ -1,8 +1,8 @@
-==================================================================================================================================
+=====================================================================================================================================================
 qt5-fsarchiver: Sichern und Wiederherstellen von Partitionen Debian, Ubuntu, Linux-Mint, Suse und Fedora. [http://wiki.ubuntuusers.de/qt4-fsarchiver]
-==================================================================================================================================
+=====================================================================================================================================================
 
-Copyright (C) 2008-2016 Francois Dupoux und Dieter Baum.  All rights reserved.
+Copyright (C) 2008-2018 Francois Dupoux und Dieter Baum.  All rights reserved.
 Kopieren der Dateien, mit und ohne Änderung ist erlaubt. Der Code ist ohne jegliche Garantie. Die Benutzung erfolgt auf eigene Gefahr.
 Francois Dupoux entwickelte das Basisprogramm fsarchiver, Hihin Ruslan hat das Programm verbessert und nach Englisch und Russisch übersetzt. Michael R. Lawrence und sein Team übersetzte nach Spanisch und Italienisch, Zhenneng Li übersetzte nach Chinesisch, Dieter Baum erstellte die GUI.
 
@@ -18,12 +18,14 @@ Für Debian, Ubuntu und Linux-Mint sind deb-Pakete, für Suse und Fedora sind rp
 Installation des Programms aus den Quelldateien:
 Für die Installation von qt5-fsarchiver müssen die für fsarchiver notwendigen Abhängigkeiten und die qt5-Entwicklungsumgebung installiert werden.
 Dies erreichen Sie, bei auf Debian aufbauenden Distributionen, mit folgendem Befehl:
-sudo apt-get install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu
+sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev
 
-In Suse werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server
+In Suse werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server liblz4-devel
 Wenn Sie ssh (secureshell) für den Zugriff auf weitere Rechner im Netzwerk nutzen wollen, müssen Sie noch sshpass individuell installieren.
 
-In Fedora werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: dnf install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel qt5-qtbase qt5-qtbase-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils
+In Fedora werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: dnf install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel qt5-qtbase qt5-qtbase-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel 
+Bei einem 64-bit System müssen Sie zusätzlich lrelease installieren: dnf install qt5-linguist.x86-64
+Bei einem 32-bit System lautet der Befehl: dnf install qt5-linguist.i686
 yum install wurde ab Fedora22 durch dnf install ersetzt.
 
 In dem Terminal wechseln Sie in den Ordner qt5-fsarchiver, der bei der Entpackung des Quellcodes installiert wurde.
@@ -32,26 +34,29 @@ Bei Debian8, Ubuntu 16.04 64-bit und Mint 17.1 64-bit Version müssen Sie eingeb
 Bei Debian8, Ubuntu 16.04 32-bit und Mint 17.1 64-bit Version müssen Sie eingeben: /usr/lib/i386-linux-gnu/qt5/bin/qmake && make && sudo make install.
 Bei Debian müssen Sie anstatt sudo make install dies eingeben: su -l, make install.
 Bei Fedora und Suse müssen Sie eingeben: qmake-qt5 && make && sudo make install
-Bevor Sie bei Fedora das Programm kompilieren können, müssen Sie die Datei lrelease von /usr/lib64/qt4/bin/ nach /usr/lib64/qt5/bin kopieren.
 
 Installation des Programms aus den DEB-Paketen:
 Ein Doppelklick auf die DEB-Datei installiert in der Regel das Programm.
 Eventuell müssen Sie im Terminal mit root-Rechten dieses Kommando eingeben: dpkg -i qt5-fsarchiver-0.6.19-19.deb, wobei die Versionsnummer angepasst werden muss.
-Bei Ubuntu 16.04 funktioniert der Doppelkick nicht. Der korrekte Befehl lautet: sudo apt-get install qt5-fsarchiver-0.6.19-19.deb.
+Bei Ubuntu 16.04 funktioniert der Doppelkick nicht. Der korrekte Befehl lautet: sudo apt install qt5-fsarchiver-0.6.19-19.deb.
 Bei Debian8 müssen Sie eingeben: gpk-install-local-file qt5-fsarchiver-0.6.19-19.deb, wobei die Versionsnummer angepasst werden muss.
-Ist bei Debian8 das Programm nicht installiert, dann müssen Sie eingeben: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt-get install -f. Die von dpkg ausgegebene Fehlermeldung können Sie ignorieren. 
+Ist bei Debian8 das Programm nicht installiert, dann müssen Sie eingeben: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt install -f. Die von dpkg ausgegebene Fehlermeldung können Sie ignorieren. 
+
+qt5-fsarchiver abeitet nicht mit Wayland zusammen. Sie müssen Ihre Distributionen mit dem X-Server starten.
+Diese Problem betrifft vorläufig alle Programme mit grafischer Oberfläche die root-Rechte benötigen.
 
 Programmaufruf:
 Meistens werden Starter unter Zubehör installiert. Mit Doppelklick wird qt5-fsarchiver gestartet.
 qt5-fsarchiver im Terminal starten:
 Gnome: /usr/sbin/qt5-fsarchiver_polkit %f oder gksu qt5-fsarchiver.
+Bei Fedora und Gnome: beesu qt5-fsarchiver
 KDE: kdesu qt5-fsarchiver oder kdesudo qt5-fsarchiver. 
 XFCE,Unity,MATE,Cinnamon,LXDE: gksu qt5-fsarchiver.
 gksu muss eventuell nachinstalliert werden
 Immer funktioniert der Programmaufruf aus einem Root-Terminal(su -l): /usr/sbin/qt5-fsarchiver.
 
 Anpassungsmöglichkeit der Oberfläche: Sie starten mit gksudo qtconfig (aus dem Paket qt5-qtconfig) die Qt Configuration. Unter Appearance > GUI Style wählen Sie GTK+ aus. Speichern Sie die Änderung und schließen Sie Qt Configuration.
-Wegen Problemen  bei der Installation von qt5-qtconfig aus den Ubuntuquellen, wird qt5-qtconfig nicht mehr mit dem deb-Paket installiert und muss manuell nachinstalliert werden. Meistens hilft bei der Installation von qt5-qtconfig aus den Ubuntuquellen wenn zunächst der Befehl sudo apt-get update im Terminal eingegeben wird.
+Wegen Problemen  bei der Installation von qt5-qtconfig aus den Ubuntuquellen, wird qt5-qtconfig nicht mehr mit dem deb-Paket installiert und muss manuell nachinstalliert werden. Meistens hilft bei der Installation von qt5-qtconfig aus den Ubuntuquellen wenn zunächst der Befehl sudo apt update im Terminal eingegeben wird.
 
 Die Handhabung von qt5-fsarchiver ist einfach:
 Über den Menüpunkt "Aktionen" oder über die Werkzeugleiste können folgende Aktionen ausgewählt werden: "Partitionen sichern/zurückschreiben", "Partitionen sichern/zurückschreiben über ein Netzwerk", "MBR/GPT sichern/zurückschreiben", "Verzeichnisse sichern/zurückschreiben" und "Festplatten klonen, Festplattenimage erzeuegen/zurückspielen". Zusätzlich kann über den Menüpunkt "Einstellungen" Basiseinstellungen wie Anzahl der Prozessorkerne oder Kompressionsstärke und Weiteres eingestellt werden.
@@ -95,7 +100,7 @@ qt5-fsarchiver kann ecryptfs verschlüsselte Home-Verzeichnisse sichern und wied
 
 Mit TrueCrypt verschlüsselte Partitionen können nicht gesichert werden.
 
-Die Sicherung einer Windows Fat-Partitionen ist nur als Image möglich (Aktionen>Festplattenimage erzeugen/zurückspielen). Es kann allerdings auf eine FAT-Partition gesichert werden. Die Sicherungsdatei wird gesplittet, wenn die Dateigröße 4GB überschreitet.
+Die Sicherung und Wiederherstellung einer Windows Fat-Partitionen ist ab Version 0.8.0.5. möglich. Auf eine FAT-Partition kann gesichert werden. Die Sicherungsdatei wird gesplittet, wenn die Dateigröße 4GB überschreitet.
 
 Klonen der Festplatte: Man wählt im linken Verzeichnisfeld die existierende Festplatte aus, die geklont werden soll und im rechten Verzeichnisfeld die Festplatte aus, die neu erzeugt werden soll. Dann den Button "Festplatte klonen" betätigen.
 Abbild der Festplatte/Partitionen erzeugen:

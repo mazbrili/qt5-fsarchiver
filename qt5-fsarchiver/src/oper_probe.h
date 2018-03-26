@@ -1,7 +1,7 @@
 /*
  * fsarchiver: Filesystem Archiver
  * 
- * Copyright (C) 2008-2017 Francois Dupoux.  All rights reserved.
+ * Copyright (C) 2008-2018 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -23,4 +23,5 @@ char *partlist_getinfo(char *bufdat, int bufsize, struct s_devinfo *blkdev, int 
 int partlist_getlist(struct s_devinfo *blkdev, int maxblkdev, int *diskcount, int *partcount); 
 
 #endif // __OPER_PROBE_H__
+
 

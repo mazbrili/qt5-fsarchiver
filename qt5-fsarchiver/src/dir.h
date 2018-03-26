@@ -1,7 +1,7 @@
 /*
  * qt5-fsarchiver: Filesystem Archiver
  * 
-* Copyright (C) 2008-2017 Dieter Baum.  All rights reserved.
+* Copyright (C) 2008-2018 Dieter Baum.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -34,6 +34,7 @@ public:
 public slots:
 	int folder_dir_path_einlesen();
         void treeview_show();
+        void zip_einlesen_dir(); 
               
 private:
     //QFileSystemModel *model;
@@ -46,7 +47,6 @@ private:
     Thread thread2;
     void indicator_reset();
     QTimer *timer;
-    
 
 protected slots:
     void closeEvent(QCloseEvent* event);
@@ -69,6 +69,7 @@ private slots:
 };
 
 #endif
+
 
 
 

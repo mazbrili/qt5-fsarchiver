@@ -131,7 +131,7 @@
      <rect>
       <x>190</x>
       <y>430</y>
-      <width>21</width>
+      <width>20</width>
       <height>20</height>
      </rect>
     </property>
@@ -197,7 +197,21 @@
      <enum>QFrame::Raised</enum>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="0" colspan="6">
+     <item row="2" column="6">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>seconds</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>minutes</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="6">
       <widget class="QProgressBar" name="progressBar">
        <property name="maximum">
         <number>100</number>
@@ -225,32 +239,11 @@ Files/directories:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="AnzahlsaveFile">
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>already saved 
 files/directories:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="AnzahlgesicherteFile">
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLineEdit" name="MinuteElapsed">
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -268,49 +261,35 @@ files/directories:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
+     <item row="2" column="3">
       <widget class="QLineEdit" name="MinuteRemaining">
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>remaining time:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="5">
+     <item row="2" column="5">
       <widget class="QLineEdit" name="SekundeRemaining">
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="6">
-      <widget class="QLabel" name="label_10">
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>seconds</string>
+        <string>remaining time:</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="6">
+     <item row="2" column="4">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>minutes</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="6">
       <widget class="QPushButton" name="pushButton_break">
        <property name="minimumSize">
         <size>
@@ -360,6 +339,27 @@ files/directories:</string>
        </property>
       </widget>
      </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="AnzahlsaveFile">
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="AnzahlgesicherteFile">
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="MinuteElapsed">
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QFrame" name="frame_2">
@@ -380,7 +380,7 @@ files/directories:</string>
     <widget class="QComboBox" name="cmb_zip">
      <property name="geometry">
       <rect>
-       <x>185</x>
+       <x>110</x>
        <y>185</y>
        <width>161</width>
        <height>27</height>
@@ -539,6 +539,16 @@ backup key</string>
       <string>GB</string>
      </property>
     </widget>
+    <widget class="QComboBox" name="cmb_zstd">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>185</y>
+       <width>45</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
@@ -574,7 +584,7 @@ backup key</string>
       </rect>
      </property>
      <property name="text">
-      <string extracomment="Partition mit * fsArchiver sichern:">Partition save 
+      <string extracomment="Partition mit * fsArchiver sichern:">&amp;Partition save 
 with fsarchiver</string>
      </property>
     </widget>
@@ -592,7 +602,7 @@ with fsarchiver</string>
      </property>
      <property name="text">
       <string extracomment="Partition mit fs-Archiver * zurückschreiben">Restore partition
-with fsarchiver</string>
+with fsarchi&amp;ver</string>
      </property>
     </widget>
    </widget>
@@ -609,6 +619,20 @@ with fsarchiver</string>
      <string>Show hidden directories and files</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_zstd">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>430</y>
+      <width>21</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>z</string>
+    </property>
+   </widget>
+   <zorder>pushButton_zstd</zorder>
    <zorder>pushButton_partition</zorder>
    <zorder>pushButton_folder</zorder>
    <zorder>label_Partition</zorder>
@@ -678,7 +702,7 @@ with fsarchiver</string>
    </widget>
    <widget class="QMenu" name="menu_Einstellungen">
     <property name="title">
-     <string>&amp;Settings</string>
+     <string>Se&amp;ttings</string>
     </property>
     <addaction name="action_Einstellungen"/>
    </widget>
@@ -710,7 +734,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/disk.png</normaloff>:/src/images/disk.png</iconset>
    </property>
    <property name="text">
-    <string>Backup partition</string>
+    <string>&amp;Backup partition</string>
    </property>
   </action>
   <action name="action_partition_restore">
@@ -719,7 +743,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/book_previous.png</normaloff>:/src/images/book_previous.png</iconset>
    </property>
    <property name="text">
-    <string>Restore partition</string>
+    <string>&amp;Restore partition</string>
    </property>
   </action>
   <action name="action_Einstellungen">
@@ -746,7 +770,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/mbr_save.png</normaloff>:/src/images/mbr_save.png</iconset>
    </property>
    <property name="text">
-    <string>Save MBR/GPT</string>
+    <string>Save &amp;MBR/GPT</string>
    </property>
   </action>
   <action name="action_mbr_restore">
@@ -755,7 +779,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/mbr_restore.png</normaloff>:/src/images/mbr_restore.png</iconset>
    </property>
    <property name="text">
-    <string>Restore MBR/GPT</string>
+    <string>R&amp;estore MBR/GPT</string>
    </property>
   </action>
   <action name="action_dir_restore">
@@ -764,7 +788,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/folder_back.png</normaloff>:/src/images/folder_back.png</iconset>
    </property>
    <property name="text">
-    <string>Restore directory </string>
+    <string>Rest&amp;ore directory </string>
    </property>
   </action>
   <action name="action_dir_save">
@@ -773,7 +797,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/folder_go.png</normaloff>:/src/images/folder_go.png</iconset>
    </property>
    <property name="text">
-    <string>Save directory </string>
+    <string>Save &amp;directory </string>
    </property>
   </action>
   <action name="action_Beenden">
@@ -791,7 +815,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/applications-internet.png</normaloff>:/src/images/applications-internet.png</iconset>
    </property>
    <property name="text">
-    <string>Save a partition/directorie on network</string>
+    <string>&amp;Save a partition/directorie on network</string>
    </property>
   </action>
   <action name="action_partition_restore_net">
@@ -800,7 +824,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/applications-internet-ein.png</normaloff>:/src/images/applications-internet-ein.png</iconset>
    </property>
    <property name="text">
-    <string>Restore a partition/directorie on network</string>
+    <string>Restore &amp;a partition/directorie on network</string>
    </property>
   </action>
   <action name="breakProcess">
@@ -832,7 +856,7 @@ with fsarchiver</string>
      <normaloff>:/src/images/clone1.png</normaloff>:/src/images/clone1.png</iconset>
    </property>
    <property name="text">
-    <string>Clone HD, HD-Image built and restore</string>
+    <string>&amp;Clone HD, HD-Image built and restore</string>
    </property>
   </action>
   <action name="action_Save_directories_on_network">
@@ -861,8 +885,8 @@ with fsarchiver</string>
      <y>225</y>
     </hint>
     <hint type="destinationlabel">
-     <x>140</x>
-     <y>405</y>
+     <x>139</x>
+     <y>495</y>
     </hint>
    </hints>
   </connection>
@@ -878,7 +902,23 @@ with fsarchiver</string>
     </hint>
     <hint type="destinationlabel">
      <x>195</x>
-     <y>414</y>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmb_zip</sender>
+   <signal>activated(QString)</signal>
+   <receiver>pushButton_zstd</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>495</y>
     </hint>
    </hints>
   </connection>
