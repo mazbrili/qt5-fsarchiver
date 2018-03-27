@@ -143,6 +143,7 @@ DialogDIR::DialogDIR(QWidget *parent)
            else
 	       lineKey ->setEchoMode(QLineEdit::Password);
            zstd_level_dir = setting.value("zstd").toInt();
+qDebug() << "zstd_level_dir" <<zstd_level_dir;
            cmb_zstd_dir -> setCurrentIndex(zstd_level_dir-1);
            auswertung = setting.value("Kompression").toInt();
            if (auswertung ==10)

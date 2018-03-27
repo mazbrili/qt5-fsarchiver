@@ -747,7 +747,7 @@ this->setCursor(Qt::ArrowCursor);
                 		      }
                 	 }
 				   }
-// qDebug() << "Befehl" << parameter[0] << parameter[1] << parameter[2] << parameter[3] << parameter[4] << parameter[5] << parameter[6] << parameter[7] << parameter[8] << indizierung + 2;                      
+ qDebug() << "Befehl" << parameter[0] << parameter[1] << parameter[2] << parameter[3] << parameter[4] << parameter[5] << parameter[6] << parameter[7] << parameter[8] << indizierung + 2;                      
 				thread1.setValues(indizierung + 2,"0");
                                 pushButton_save->setEnabled(false);
                                 pushButton_end->setEnabled(false); 
@@ -1933,6 +1933,7 @@ int zip = cmb_zip->currentIndex();
        cmb_zstd_net->setEnabled(true);
     else
        cmb_zstd_net->setEnabled(false);
+qDebug() << "zip" << zip;	
 }
 
 

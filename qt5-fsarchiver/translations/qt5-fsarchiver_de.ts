@@ -3827,8 +3827,7 @@ entschlüsseln Schlüssel:</translation>
         <source>&amp;Partition save 
 with fsarchiver</source>
         <extracomment>Partition mit * fsArchiver sichern:</extracomment>
-        <translation type="unfinished">&amp;Partition mit 
-fsarchiver sichern</translation>
+        <translation type="unfinished">&amp;Partition mit fsarchiver sichern</translation>
     </message>
     <message>
         <location filename="../src/ui/fsarchiverMain.ui" line="604"/>
@@ -3836,8 +3835,7 @@ fsarchiver sichern</translation>
         <source>Restore partition
 with fsarchi&amp;ver</source>
         <extracomment>Partition mit fs-Archiver * zurückschreiben</extracomment>
-        <translation type="unfinished">Wiederherstellung der 
-Parttion mit fsarchi&amp;ver</translation>
+        <translation type="unfinished">Wiederherstellung der Parttion mit fsarchi&amp;ver</translation>
     </message>
     <message>
         <location filename="../src/ui/fsarchiverMain.ui" line="619"/>
