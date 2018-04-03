@@ -18,12 +18,12 @@ Für Debian, Ubuntu und Linux-Mint sind deb-Pakete, für Suse und Fedora sind rp
 Installation des Programms aus den Quelldateien:
 Für die Installation von qt5-fsarchiver müssen die für fsarchiver notwendigen Abhängigkeiten und die qt5-Entwicklungsumgebung installiert werden.
 Dies erreichen Sie, bei auf Debian aufbauenden Distributionen, mit folgendem Befehl:
-sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev
+sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev libzstd1-dev
 
 In Suse werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server liblz4-devel
 Wenn Sie ssh (secureshell) für den Zugriff auf weitere Rechner im Netzwerk nutzen wollen, müssen Sie noch sshpass individuell installieren.
 
-In Fedora werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: dnf install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel qt5-qtbase qt5-qtbase-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel 
+In Fedora werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: dnf install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel qt5-qtbase qt5-qtbase-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel libzstd-devel
 Bei einem 64-bit System müssen Sie zusätzlich lrelease installieren: dnf install qt5-linguist.x86-64
 Bei einem 32-bit System lautet der Befehl: dnf install qt5-linguist.i686
 yum install wurde ab Fedora22 durch dnf install ersetzt.

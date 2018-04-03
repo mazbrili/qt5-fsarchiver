@@ -180,7 +180,6 @@ TRANSLATIONS += translations/qt5-fsarchiver_ar.ts \
                 translations/qt5-fsarchiver_hy.ts \
                 translations/qt5-fsarchiver_id.ts \
                 translations/qt5-fsarchiver_it.ts \
-                translations/qt5-fsarchiver_ja.ts \
                 translations/qt5-fsarchiver_jp.ts \
                 translations/qt5-fsarchiver_ko.ts \
                 translations/qt5-fsarchiver_lt.ts \

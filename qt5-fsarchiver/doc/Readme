@@ -19,12 +19,12 @@ For Debian, Ubuntu and Linux Mint are deb packages for Suse and Fedora rpm packa
 Installing the program from the source files:
 To install qt5-fsarchiver the necessary dependencies for fsarchiver and the qt5 development environment must be installed.
 Of Debian based distributions: This is the command:
-sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev
+sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev libzstd1-dev
  
 The command for Suse: (you must be an administrator su -l) zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server lz4-devel
 If you use ssh (secure shell) want to access other computers in the network, you still need to install individually sshpass.
 
-The command for Fedora: (you must be an administrator su -l) yum install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel   e2fsprogs-devel libblkid-devel libattr-devel qt5-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel 
+The command for Fedora: (you must be an administrator su -l) yum install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel   e2fsprogs-devel libblkid-devel libattr-devel qt5-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel libzstd-devel
 For a 64-bit system, you must also install lrelease: dnf install qt5-linguist.x86-64
 For a 32-bit system, the command is: dnf install qt5-linguist.i686
 yum install was replaced from Fedora22 by dnf install.

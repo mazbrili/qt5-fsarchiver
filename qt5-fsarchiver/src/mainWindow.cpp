@@ -617,7 +617,6 @@ int MWindow::savePartition()
                                    compress = "-Z" + QString::number(zip_zstd);
                                    parameter[2] = compress;
                                 }
-                qDebug() << "compress" << compress;
                                 int kerne = cmb_kerne->currentIndex()+1;
                                 QString index = QString::number(kerne);
                                 if (index == "0")
@@ -723,7 +722,7 @@ int MWindow::savePartition()
                 		  }
              			}
    
-qDebug() << "Befehl" << parameter[0] << parameter[1] << parameter[2] << parameter[3] << parameter[4] << parameter[5] << parameter[6] << parameter[7] << parameter[8] << indizierung + 2;
+//qDebug() << "Befehl" << parameter[0] << parameter[1] << parameter[2] << parameter[3] << parameter[4] << parameter[5] << parameter[6] << parameter[7] << parameter[8] << indizierung + 2;
 
 				thread1.setValues(indizierung + 2,"0"); 
                                 pushButton_end->setEnabled(false);  
@@ -1099,7 +1098,6 @@ int zip = cmb_zip->currentIndex();
        cmb_zstd->setEnabled(true);
     else
        cmb_zstd->setEnabled(false);
-qDebug() << "zip" << zip;	
 }
 
 void MWindow::folder_einlesen() {
