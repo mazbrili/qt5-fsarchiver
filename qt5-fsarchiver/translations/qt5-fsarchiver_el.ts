@@ -3066,13 +3066,6 @@ Die Dateiendung muss .fsa sein</comment>
         <translation>qt5-fsarchiver</translation>
     </message>
     <message>
-        <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
-        <translation type="vanished">Δημιουργία αντιγράφων ασφαλείας και επαναφορά διαμερίσματα, καταλόγου και MBR.
-Έκδοση 0.8.4-0, 10.Απρίλιος 2018</translation>
-    </message>
-    <message>
         <location filename="../src/mainWindow.cpp" line="192"/>
         <source>lz4</source>
         <comment>lz4</comment>
@@ -3087,10 +3080,10 @@ version 0.8.4-0, April 10, 2018</source>
     <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
         <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018</comment>
+version 0.8.4-3, April 20, 2018</source>
+        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
         <translation type="unfinished">Δημιουργία αντιγράφων ασφαλείας και επαναφορά διαμερίσματα, καταλόγου και MBR.
-Έκδοση 0.8.4-0, 10.Απρίλιος 2018</translation>
+Έκδοση 0.8.4-3, 20.Απρίλιος 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1125"/>

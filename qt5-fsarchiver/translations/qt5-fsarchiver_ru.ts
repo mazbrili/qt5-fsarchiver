@@ -2741,13 +2741,6 @@ p, li { white-space: pre-wrap; }
         <translation>Восстановление было выполнено</translation>
     </message>
     <message>
-        <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
-        <translation type="vanished">Сохранение и восстановление разделов, каталогов и MBR.
-Версия 0.8.4-0, 10.апрель 2018</translation>
-    </message>
-    <message>
         <location filename="../src/mainWindow.cpp" line="1203"/>
         <source>Yes</source>
         <comment>Ja</comment>
@@ -2902,10 +2895,10 @@ verschlüsseln. Schlüssel</comment>
     <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
         <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018</comment>
+version 0.8.4-3, April 20, 2018</source>
+        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
         <translation type="unfinished">Сохранение и восстановление разделов, каталогов и MBR.
-Версия 0.8.4-0, 10.апрель 2018</translation>
+Версия 0.8.4-3, 20.апрель 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1676"/>

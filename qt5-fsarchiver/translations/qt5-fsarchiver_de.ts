@@ -2910,12 +2910,6 @@ Sie müssen eine Datei auswählen</translation>
         <translation>Die Wiederherstellung wird durchgeführt</translation>
     </message>
     <message>
-        <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.3-0, 15.Januar 2018</comment>
-        <translation type="vanished">Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR. Version 0.8.4-0, 10.April 2018</translation>
-    </message>
-    <message>
         <location filename="../src/mainWindow.cpp" line="1434"/>
         <source>The backup of the partition was only partially successful.
 </source>
@@ -3122,9 +3116,9 @@ Vielleicht ist die Partition verschlüsselt?</translation>
     <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
         <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018</comment>
-        <translation type="unfinished">Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR. Version 0.8.4-0, 10.April 2018</translation>
+version 0.8.4-3, April 20, 2018</source>
+        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
+        <translation type="unfinished">Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR. Version 0.8.4-3, 20.April 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1489"/>

@@ -3061,12 +3061,6 @@ Die Dateiendung muss .fsa sein</comment>
         <translation>qt5-fsarchiver</translation>
     </message>
     <message>
-        <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
-        <translation type="vanished">Back-up en herstel partities, mappen en MBR. Versie 0.8.4-0, 10.April 2018</translation>
-    </message>
-    <message>
         <location filename="../src/mainWindow.cpp" line="1094"/>
         <source></source>
         <comment>Das Programm muss mit Root-Rechten gestartet werden. Das Programm wird beendet.
@@ -3089,9 +3083,9 @@ version 0.8.4-0, April 10, 2018</source>
     <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
         <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018</comment>
-        <translation type="unfinished">Back-up en herstel partities, mappen en MBR. Versie 0.8.4-0, 10.April 2018</translation>
+version 0.8.4-3, April 20, 2018</source>
+        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
+        <translation type="unfinished">Back-up en herstel partities, mappen en MBR. Versie 0.8.4-3, 20.April 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1125"/>

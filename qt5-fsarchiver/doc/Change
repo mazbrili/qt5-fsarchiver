@@ -1,8 +1,10 @@
 ===========================================================================================================
 * qt5-fsarchiver: Graphical interface for fsarchiver fsarchiver [http://wiki.ubuntuusers.de/qt4-fsarchiver] 
 ===========================================================================================================
-*  qt5-fsarchiver-0.8.3-0 April 10, 2018.
-     - Added support for zstd compression algorithm (New option -Z, from 1 to 22)
+*  qt5-fsarchiver-0.8.4-3 April 20, 2018.
+     - Polish translation completed.
+*  qt5-fsarchiver-0.8.4-0 April 10, 2018.
+     - Added support for zstd compression algorithm (New option -Z, from 1 to 22).
 *  qt5-fsarchiver-0.8.3-0 January 15, 2018.
      - Implemented LZ4 compression (Contribution from Cristian Vazquez).
 *  qt5-fsarchiver-0.8.2-0 January 2, 2018.

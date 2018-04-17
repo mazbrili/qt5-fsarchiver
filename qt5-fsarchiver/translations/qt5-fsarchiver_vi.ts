@@ -3066,13 +3066,6 @@ Die Dateiendung muss .fsa sein</comment>
         <translation>qt5-fsarchiver</translation>
     </message>
     <message>
-        <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
-        <translation type="vanished">Sao lưu và phục hồi phân vùng, thư mục và MBR.
-Phiên bản 0.8.4-0, 10. Tháng 4 2018</translation>
-    </message>
-    <message>
         <location filename="../src/mainWindow.cpp" line="192"/>
         <source>lz4</source>
         <comment>lz4</comment>
@@ -3087,10 +3080,10 @@ Phiên bản 0.8.4-0, 10. Tháng 4 2018</translation>
     <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
         <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018</comment>
+version 0.8.4-3, April 20, 2018</source>
+        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
         <translation type="unfinished">Sao lưu và phục hồi phân vùng, thư mục và MBR.
-Phiên bản 0.8.4-0, 10. Tháng 4 2018</translation>
+Phiên bản 0.8.4-3, 20. Tháng 4 2018</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1125"/>

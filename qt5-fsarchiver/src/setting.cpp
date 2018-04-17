@@ -46,7 +46,7 @@ DialogSetting::DialogSetting(QWidget *parent)
         items_zip << tr("lz4", "lz4") << tr("lzo", "lzo") << tr("gzip fast","gzip fast") << tr("gzip standard","gzip standard") << tr("qzip best","qzip best") <<  tr("bzip2 fast","bzip2 fast");
    	cmb_zip->addItems (items_zip);
    	items_zip.clear();
-   	items_zip << tr("bzip2 good", "bzip2 good") << tr("lzma fast","lzma fast") << tr("lzma medium","lzma medium") << tr("lzma best","lzma best") << tr("lzstd","lzstd");
+   	items_zip << tr("bzip2 good", "bzip2 good") << tr("lzma fast","lzma fast") << tr("lzma medium","lzma medium") << tr("lzma best","lzma best") << tr("zstd","zstd");
    	cmb_zip->addItems (items_zip);
    	items_zip.clear();
         items_network << tr("Samba") << tr("SSH") << tr("NFS");
@@ -56,15 +56,21 @@ DialogSetting::DialogSetting(QWidget *parent)
         setting.beginGroup("Basiseinstellungen");
         int auswertung = setting.value("Sprache").toInt(); 
         cmb_language -> setCurrentIndex(auswertung-1); 
-        auswertung = setting.value("zstd").toInt(); 
-        cmb_zstd -> setCurrentIndex(auswertung-1); 
+        auswertung = setting.value("zstd").toInt();
+        if (auswertung !=0) 
+            cmb_zstd -> setCurrentIndex(auswertung-1); 
+        else
+            cmb_zstd -> setCurrentIndex(7);
         auswertung = setting.value("dummy").toInt();
         if (auswertung ==2){
            chk_ssh ->setEnabled(false);
            chk_sshfs ->setEnabled(false); 
         } 
         auswertung = setting.value("Kompression").toInt();
-        cmb_zip -> setCurrentIndex(auswertung); 
+        if (auswertung !=0)
+             cmb_zip -> setCurrentIndex(auswertung);
+        else 
+            cmb_zip -> setCurrentIndex(10);
         auswertung = setting.value("Kerne").toInt();
         cmb_Kerne -> setCurrentIndex(auswertung-1); 
         auswertung = setting.value("Network").toInt();

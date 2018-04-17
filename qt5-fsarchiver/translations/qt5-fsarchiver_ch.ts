@@ -3143,17 +3143,11 @@ Die Dateiendung muss .fsa sein</comment>
         <translation type="unfinished">文件/usr/share/doc/qt5-fsarchiver/doc/Readme包含程序使用说明。每次启动时都弹出此对话框吗？您可以在程序配置界面修改此设置。</translation>
     </message>
     <message>
-        <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.0-5, 2. November 2016</comment>
-        <translation type="vanished">分区、目录和MBR 备份/恢复工具。 版本 0.8.4-0, 2018. 四月.10</translation>
-    </message>
-    <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
         <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-0, April 10, 2018</source>
-        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-0, 10. April 2018</comment>
-        <translation type="unfinished">分区、目录和MBR 备份/恢复工具。 版本 0.8.4-0, 2018. 四月.10</translation>
+version 0.8.4-3, April 20, 2018</source>
+        <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
+        <translation type="unfinished">分区、目录和MBR 备份/恢复工具。 版本 0.8.4-3, 2018. 四月.20</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1125"/>
