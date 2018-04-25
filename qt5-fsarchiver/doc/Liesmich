@@ -37,10 +37,10 @@ Bei Fedora und Suse müssen Sie eingeben: qmake-qt5 && make && sudo make install
 
 Installation des Programms aus den DEB-Paketen:
 Ein Doppelklick auf die DEB-Datei installiert in der Regel das Programm.
-Eventuell müssen Sie im Terminal mit root-Rechten dieses Kommando eingeben: dpkg -i qt5-fsarchiver-0.6.19-19.deb, wobei die Versionsnummer angepasst werden muss.
-Bei Ubuntu 16.04 funktioniert der Doppelkick nicht. Der korrekte Befehl lautet: sudo apt install qt5-fsarchiver-0.6.19-19.deb.
-Bei Debian8 müssen Sie eingeben: gpk-install-local-file qt5-fsarchiver-0.6.19-19.deb, wobei die Versionsnummer angepasst werden muss.
-Ist bei Debian8 das Programm nicht installiert, dann müssen Sie eingeben: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt install -f. Die von dpkg ausgegebene Fehlermeldung können Sie ignorieren. 
+Eventuell müssen Sie im Terminal mit root-Rechten dieses Kommando eingeben: dpkg -i qt5-fsarchiver-0.8.4-3.deb, wobei die Versionsnummer angepasst werden muss.
+Bei Ubuntu 16.04 funktioniert der Doppelkick nicht. Der korrekte Befehl lautet: sudo apt install qt5-fsarchiver-0.8.4-3.deb.
+Bei Debian8 müssen Sie eingeben: gpk-install-local-file qt5-fsarchiver-0.8.4-3.deb, wobei die Versionsnummer angepasst werden muss.
+Ist bei Debian8 das Programm nicht installiert, dann müssen Sie eingeben: su -l dpkg-i, qt5-fsarchiver-0.8.4-3.deb und apt install -f. Die von dpkg ausgegebene Fehlermeldung können Sie ignorieren. 
 
 qt5-fsarchiver abeitet nicht mit Wayland zusammen. Sie müssen Ihre Distributionen mit dem X-Server starten.
 Diese Problem betrifft vorläufig alle Programme mit grafischer Oberfläche die root-Rechte benötigen.
@@ -48,11 +48,10 @@ Diese Problem betrifft vorläufig alle Programme mit grafischer Oberfläche die 
 Programmaufruf:
 Meistens werden Starter unter Zubehör installiert. Mit Doppelklick wird qt5-fsarchiver gestartet.
 qt5-fsarchiver im Terminal starten:
-Gnome: /usr/sbin/qt5-fsarchiver_polkit %f oder gksu qt5-fsarchiver.
+Gnome: pkexec qt5-fsarchiver.
 Bei Fedora und Gnome: beesu qt5-fsarchiver
 KDE: kdesu qt5-fsarchiver oder kdesudo qt5-fsarchiver. 
-XFCE,Unity,MATE,Cinnamon,LXDE: gksu qt5-fsarchiver.
-gksu muss eventuell nachinstalliert werden
+XFCE,Unity,MATE,Cinnamon,LXDE: pkexec qt5-fsarchiver.
 Immer funktioniert der Programmaufruf aus einem Root-Terminal(su -l): /usr/sbin/qt5-fsarchiver.
 
 Anpassungsmöglichkeit der Oberfläche: Sie starten mit gksudo qtconfig (aus dem Paket qt5-qtconfig) die Qt Configuration. Unter Appearance > GUI Style wählen Sie GTK+ aus. Speichern Sie die Änderung und schließen Sie Qt Configuration.

@@ -1,6 +1,8 @@
 ==================================================================================================
 * qt5-fsarchiver: Grafische Oberfläche für fsarchiver [http://wiki.ubuntuusers.de/qt4-fsarchiver] 
 ==================================================================================================
+* qt5-fsarchiver-0.8.4-4 30. April 2018.
+    - pkexec ersetzt gksudo
 * qt5-fsarchiver-0.8.4-3 20. April 2018.
     - polnische Übersetzung vervollständigt.
 * qt5-fsarchiver-0.8.4-0 10. April 2018.

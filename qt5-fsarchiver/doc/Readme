@@ -39,10 +39,10 @@ This is the command for Fedora and Suse: qmake-qt5 && make && sudo make install.
 
 Installing the program from the DEB packages:
 A double click on the deb file installs the program.
-If the installation is unsuccessful you enter this command in a terminal(you must be administrator): dpkg -i qt5-fsarchiver-0.6.19-19.deb. The version number needs to be adjusted.
-In Ubuntu 4.16 the double is not working. The correct command is: sudo apt install qt5-fsarchiver-0.6.19-19.deb.
-In Debian8 is this the command: gpk-install-local-file qt5-fsarchiver-0.6.19-19.deb. The version number needs to be adjusted.
-Is in Debian8 gpk is not installed, then you must enter: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt install -f. The output of dpkg error message can be ignored.
+If the installation is unsuccessful you enter this command in a terminal(you must be administrator): dpkg -i qt5-fsarchiver-0.8.4-3.deb. The version number needs to be adjusted.
+In Ubuntu 4.16 the double is not working. The correct command is: sudo apt install qt5-fsarchiver-0.8.4-3.deb.
+In Debian8 is this the command: gpk-install-local-file qt5-fsarchiver-0.8.4-3.deb. The version number needs to be adjusted.
+Is in Debian8 gpk is not installed, then you must enter: su -l dpkg-i, qt5-fsarchiver-0.8.4-3.deb und apt install -f. The output of dpkg error message can be ignored.
 
 qt5-fsarchiver does not work with Wayland. You must start your distributions with the X server.
 This problem affects provisionally all programs with a graphical interface that require root privileges.
@@ -51,12 +51,10 @@ Program call:
 Partial starters are installed. By double-qt5-fsarchiver is started.
 Start qt5-fsarchiver in a terminal:
 
-Debian: Type in the terminal: gksu /usr/sbin/qt5-fsarchiver.
-Gnome: /usr/sbin/qt5-fsarchiver_polkit %f oder gksu qt5-fsarchiver.
+Gnome: pkexec qt5-fsarchiver.
 Fedora Gnome: beesu qt5-fsarchiver.
 KDE: kdesu qt5-fsarchiver oder kdesudo qt5-fsarchiver. 
-XFCE,Unity,MATE,Cinnamon,LXDE: gksu qt5-fsarchiver.
-gksu may need to be installed.
+XFCE,Unity,MATE,Cinnamon,LXDE: pkexec qt5-fsarchiver.
 Always the program call functions from a root terminal (su -l): /usr/sbin/qt5-fsarchiver.
 
 Note for Ubuntu: The surface has Ubuntu 10.10 is no longer adapted Gnome. 
