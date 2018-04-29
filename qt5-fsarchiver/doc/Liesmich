@@ -18,7 +18,7 @@ Für Debian, Ubuntu und Linux-Mint sind deb-Pakete, für Suse und Fedora sind rp
 Installation des Programms aus den Quelldateien:
 Für die Installation von qt5-fsarchiver müssen die für fsarchiver notwendigen Abhängigkeiten und die qt5-Entwicklungsumgebung installiert werden.
 Dies erreichen Sie, bei auf Debian aufbauenden Distributionen, mit folgendem Befehl:
-sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev libzstd1-dev
+sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient liblz4-dev libzstd1-dev
 
 In Suse werden die Abhängigkeiten mit Root-Rechten (su -l) mit diesem Befehl installiert: zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server liblz4-devel
 Wenn Sie ssh (secureshell) für den Zugriff auf weitere Rechner im Netzwerk nutzen wollen, müssen Sie noch sshpass individuell installieren.
@@ -48,13 +48,13 @@ Diese Problem betrifft vorläufig alle Programme mit grafischer Oberfläche die 
 Programmaufruf:
 Meistens werden Starter unter Zubehör installiert. Mit Doppelklick wird qt5-fsarchiver gestartet.
 qt5-fsarchiver im Terminal starten:
-Gnome: pkexec qt5-fsarchiver.
+Gnome: pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY qt5-fsarchiver
 Bei Fedora und Gnome: beesu qt5-fsarchiver
-KDE: kdesu qt5-fsarchiver oder kdesudo qt5-fsarchiver. 
-XFCE,Unity,MATE,Cinnamon,LXDE: pkexec qt5-fsarchiver.
-Immer funktioniert der Programmaufruf aus einem Root-Terminal(su -l): /usr/sbin/qt5-fsarchiver.
+KDE: pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY qt5-fsarchiver 
+XFCE,Unity,MATE,Cinnamon,LXDE: pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY qt5-fsarchiver
+Immer funktioniert der Programmaufruf aus einem Root-Terminal(su -l): /usr/sbin/qt5-fsarchiver
 
-Anpassungsmöglichkeit der Oberfläche: Sie starten mit gksudo qtconfig (aus dem Paket qt5-qtconfig) die Qt Configuration. Unter Appearance > GUI Style wählen Sie GTK+ aus. Speichern Sie die Änderung und schließen Sie Qt Configuration.
+Anpassungsmöglichkeit der Oberfläche: Sie starten mit sudo qtconfig (aus dem Paket qt5-qtconfig) die Qt Configuration. Unter Appearance > GUI Style wählen Sie GTK+ aus. Speichern Sie die Änderung und schließen Sie Qt Configuration.
 Wegen Problemen  bei der Installation von qt5-qtconfig aus den Ubuntuquellen, wird qt5-qtconfig nicht mehr mit dem deb-Paket installiert und muss manuell nachinstalliert werden. Meistens hilft bei der Installation von qt5-qtconfig aus den Ubuntuquellen wenn zunächst der Befehl sudo apt update im Terminal eingegeben wird.
 
 Die Handhabung von qt5-fsarchiver ist einfach:

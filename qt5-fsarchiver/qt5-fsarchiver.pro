@@ -160,8 +160,6 @@ RESOURCES += src/icon.qrc
  doc.path = /usr/share/doc/qt5-fsarchiver/doc
  smbfind.files = src/sbin
  smbfind.path = /usr
- polkit.files = src/share/polkit-1/actions/org.project.pkexec.run-qt5-fsarchiver.policy
- polkit.path = /usr/share/polkit-1/actions
 TRANSLATIONS += translations/qt5-fsarchiver_ar.ts \
                 translations/qt5-fsarchiver_ca.ts \
                 translations/qt5-fsarchiver_ch.ts \
@@ -240,4 +238,4 @@ translations.files = translations/qt5-fsarchiver_de.qm \
                 translations/qt5-fsarchiver_ur.qm \ 
                 translations/qt5-fsarchiver_uk.qm
 translations.path = /usr/share/qt5/translations
-INSTALLS = target icon autostart autostart1 autostart2 translations doc smbfind polkit
+INSTALLS = target icon autostart autostart1 autostart2 translations doc smbfind 

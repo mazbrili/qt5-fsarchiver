@@ -17,12 +17,12 @@ For Debian, Ubuntu and Linux Mint are deb packages for Suse and Fedora rpm packa
 Installing the program from the source files:
 To install qt5-fsarchiver the necessary dependencies for fsarchiver and the qt5 development environment must be installed.
 Of Debian based distributions: This is the command:
-sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev
+sudo apt install libzip-dev libbz2-dev liblzma-dev liblzo2-2 liblzo2-dev libgcrypt11-dev e2fslibs-dev libblkid-dev libattr1-dev build-essential qtbase5-dev qttools5-dev-tools btrfs-tools gdisk sshfs sshpass nmap samba nfs-kernel-server nfs-common smbclient gksu liblz4-dev libzstd1-dev
  
 The command for Suse: (you must be an administrator su -l) zypper in libQt5Core5 libqt5-qttools libqt5-qtbase-devel make libzip-devel libbz2-devel xz-devel lzo-devel libgcrypt-devel e2fsprogs-devel libblkid-devel libattr-devel btrfsprogs gdisk sshfs nmap samba nfs-kernel-server lz4-devel
 If you use ssh (secure shell) want to access other computers in the network, you still need to install individually sshpass.
 
-The command for Fedora: (you must be an administrator su -l) yum install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel   e2fsprogs-devel libblkid-devel libattr-devel qt5-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel 
+The command for Fedora: (you must be an administrator su -l) yum install  gcc gcc-c++ zlib-devel bzip2-devel xz-devel lzo-devel libgcrypt-devel   e2fsprogs-devel libblkid-devel libattr-devel qt5-devel gdisk sshfs sshpass nmap samba samba-client nfs-utils beesu lz4-devel libzstd-devel
 For a 64-bit system, you must also install lrelease: dnf install qt5-linguist.x86-64
 For a 32-bit system, the command is: dnf install qt5-linguist.i686
 yum install was replaced from Fedora22 by dnf install.
@@ -37,10 +37,10 @@ This is the command for Fedora and Suse: qmake-qt5 && make && sudo make install.
 
 Installing the program from the DEB packages:
 A double click on the deb file installs the program.
-If the installation is unsuccessful you enter this command in a terminal(you must be administrator): dpkg -i qt5-fsarchiver-0.6.19-19.deb. The version number needs to be adjusted.
-In Ubuntu 4.16 the double is not working. The correct command is: sudo apt install qt5-fsarchiver-0.6.19-19.deb.
-In Debian8 is this the command: gpk-install-local-file qt5-fsarchiver-0.6.19-19.deb. The version number needs to be adjusted.
-Is in Debian8 gpk is not installed, then you must enter: su -l dpkg-i, qt5-fsarchiver-0.6.19-19.deb und apt install -f. The output of dpkg error message can be ignored.
+If the installation is unsuccessful you enter this command in a terminal(you must be administrator): dpkg -i qt5-fsarchiver-0.8.4-3.deb. The version number needs to be adjusted.
+In Ubuntu 4.16 the double is not working. The correct command is: sudo apt install qt5-fsarchiver-0.8.4-3.deb.
+In Debian8 is this the command: gpk-install-local-file qt5-fsarchiver-0.8.4-3.deb. The version number needs to be adjusted.
+Is in Debian8 gpk is not installed, then you must enter: su -l dpkg-i, qt5-fsarchiver-0.8.4-3.deb und apt install -f. The output of dpkg error message can be ignored.
 
 qt5-fsarchiver does not work with Wayland. You must start your distributions with the X server.
 This problem affects provisionally all programs with a graphical interface that require root privileges.
@@ -49,12 +49,10 @@ Program call:
 Partial starters are installed. By double-qt5-fsarchiver is started.
 Start qt5-fsarchiver in a terminal:
 
-Debian: Type in the terminal: gksu /usr/sbin/qt5-fsarchiver.
-Gnome: /usr/sbin/qt5-fsarchiver_polkit %f oder gksu qt5-fsarchiver.
+Gnome: pkexec qt5-fsarchiver.
 Fedora Gnome: beesu qt5-fsarchiver.
 KDE: kdesu qt5-fsarchiver oder kdesudo qt5-fsarchiver. 
-XFCE,Unity,MATE,Cinnamon,LXDE: gksu qt5-fsarchiver.
-gksu may need to be installed.
+XFCE,Unity,MATE,Cinnamon,LXDE: pkexec qt5-fsarchiver.
 Always the program call functions from a root terminal (su -l): /usr/sbin/qt5-fsarchiver.
 
 Note for Ubuntu: The surface has Ubuntu 10.10 is no longer adapted Gnome. 

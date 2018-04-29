@@ -3081,10 +3081,10 @@ Die Dateiendung muss .fsa sein</comment>
     <message>
         <location filename="../src/mainWindow.cpp" line="1117"/>
 <source>Backup and restore partitions, directory and MBR.
-version 0.8.4-4, April 30, 2018</source>
+version 0.8.4-5, April 30, 2018</source>
         <comment>Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-3, 20. April 2018</comment>
 <translation>Կրկնօրնկ եւ վերականգնել բաժիններ, գրացուցակը եւ MBR.
-Մեսսենջեր 0.8.4-4 2018 Ապրիլ 30</translation>
+Մեսսենջեր 0.8.4-5 2018 Ապրիլ 30</translation>
     </message>
     <message>
         <location filename="../src/mainWindow.cpp" line="1125"/>

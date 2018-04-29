@@ -2,7 +2,7 @@
 Name=qt5-fsarchiver
 Name[de_DE]=qt5-fsarchiver
 Comment=Qt GUI for fsarchiver
-Exec=kdesudo qt5-fsarchiver
+Exec=qt5-fsarchiver.sh
 Icon=/usr/share/app-install/icons/harddrive1.png
 Terminal=false
 Type=Application
