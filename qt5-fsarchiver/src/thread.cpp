@@ -48,9 +48,8 @@ if (qdummy == "0") {
     }
  }
 int pos = qdummy.indexOf("dd"); 
-if (qdummy != "0" && pos > -1) {  //thread Festplatte klonen, Image erstellen
+if (qdummy != "0" && pos > -1)   //thread Festplatte klonen, Image erstellen
 	dialog_auswertung = system (qdummy.toLatin1().data()); 
-	}
 }
 
  

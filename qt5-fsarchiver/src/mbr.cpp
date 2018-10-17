@@ -53,11 +53,11 @@ QStringList filters;
             } 
         if (dialog_auswertung == 5){
             bt_save->setText (tr("MBR/GPT restore", "MBR/GPT zurückschreiben"));  
-	    filters << "*_gpt_sd*" << "*_mbr_sd*" ;
+	    filters << "*_gpt_*" << "*_mbr_*" ;
    	    dirModel->setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
    	    dirModel->setNameFilters(filters);  
             }
-         disk_art();
+        disk_art();
 }
 
 void DialogMBR::disk_exist()
@@ -68,6 +68,7 @@ QString homepath = QDir::homePath();
 int i = 0;
 int j = 0;
 QString filename = homepath + "/.config/qt5-fsarchiver/disk.txt";
+//QString filename = "/home/dieter/Schreibtisch/disk.txt";
 QFile file(filename);
 QStringList disk;
 QString disk_;
@@ -77,7 +78,15 @@ QString disk_;
             QTextStream ds(&file);
            while (!ds.atEnd()){
            	disk_ = ds.readLine();
-                if (disk_.indexOf("/dev/sd") > 4)
+                if (disk_.indexOf("/dev/nv") > 4)
+                { 
+                   disk = disk_.split(" ");
+                   disk_name[j] = disk[1];
+                   disk_name[j] = disk_name[j].left(disk_name[j].size() -1);
+                   disk_name[j] = disk_name[j].right(disk_name[j].size() -5);
+                   j++;
+                }
+               if (disk_.indexOf("/dev/sd") > 4)
                 { 
                    disk = disk_.split(" ");
                    disk_name[j] = disk[1];
@@ -89,10 +98,10 @@ QString disk_;
            } 
            file.close();
            befehl = "rm " + filename;
-           system (befehl.toLatin1().data());
+         //  system (befehl.toLatin1().data());
 //Anzahl Festplatten ermitteln 
           j = 0;
-          while (disk_name[j]!= "")
+         while (disk_name[j]!= "")
             {
             j++;
             }
@@ -100,7 +109,7 @@ QString disk_;
            items_disk.clear();
            for (i=0; i < j; i++) 
               items_disk <<  disk_name[i];
-           cmb_disk->addItems (items_disk);      
+           cmb_disk->addItems (items_disk);     
 }
 
 void DialogMBR::disk_art()
@@ -129,9 +138,10 @@ QModelIndexList indexes = selModel->selectedIndexes();
     i = cmb_disk->currentIndex();
     partition = disk_name[i];
     efiflag = is_gpt("/dev/" + partition);
+    // efiflag = 0 :MBR 1:GPT
     folder_ =  (dirModel->filePath(index));
-    pos = folder_.indexOf("mbr_sd");
-    pos2 = folder_.indexOf("gpt_sd");
+    pos = folder_.indexOf("_mbr_");
+    pos2 = folder_.indexOf("_gpt_");
     if (efiflag == 0 && (pos == -1) && (dialog_auswertung == 5)){
           QMessageBox::about(this, tr("Note", "Hinweis"),
       tr("You must choose the MBR file\n","Sie müssen eine MBR Sicherungsdatei auswählen.\n"));
@@ -212,7 +222,7 @@ QModelIndexList indexes = selModel->selectedIndexes();
            if (i ==0) {
         	this->setCursor(Qt::WaitCursor);
 	   if (cmb_mbr->currentIndex() == 0) {
-              befehl = ("dd if='"+ folder_ + "' of=/dev/" + partition + " bs=1 count=446");
+               befehl = ("dd if='"+ folder_ + "' of=/dev/" + partition + " bs=1 count=446");
               i = system (befehl.toLatin1().data());
               this->setCursor(Qt::ArrowCursor);  
    	      if (i == 0)
@@ -258,7 +268,6 @@ QModelIndexList indexes = selModel->selectedIndexes();
         int auswertung = questionMessage(tr("Caution: If you really want to to write back the secret field?\n", "Vorsicht: Wollen Sie wirklich den verborgenen Bereich zurückschreiben? \n")); 
             if  (auswertung == 2) 
                 return 1; 
-            //i = folder_einlesen();
             this->setCursor(Qt::WaitCursor);
             if (i ==0) {
 		   //verborgenen Bereich extrahieren                   
@@ -289,6 +298,7 @@ QString homepath = QDir::homePath();
 int sektor_ = 0;
 int i = 0;
 int j = 0;
+int pos = 0;
 QString dummy[10];
 QStringList hidden_size;
 QString hidden_size_;
@@ -299,7 +309,11 @@ QString hidden_size_;
         // derzeit für Ubuntu:  Startsektor sda1 = 63*512 = 32256 
 	// Sektornummer in Datei abspeichern
         Dateiname = homepath + "/.config/qt5-fsarchiver/sektornummer.txt";
-        befehl = "fdisk -lu | grep " + partition + "1 > " + homepath + "/.config/qt5-fsarchiver/sektornummer.txt";
+        pos = partition.indexOf("sd");
+        if (pos == 0)  // sd... 
+           befehl = "fdisk -lu | grep " + partition + "1 > " + homepath + "/.config/qt5-fsarchiver/sektornummer.txt";
+        else   //nvme
+           befehl = "fdisk -lu | grep " + partition + "p1 > " + homepath + "/.config/qt5-fsarchiver/sektornummer.txt";
         i = system (befehl.toLatin1().data());
         QFile file(Dateiname);
         QFileInfo info(Dateiname); 
@@ -329,7 +343,7 @@ QString hidden_size_;
                sektor_ = dummy[1].toInt(); //Festplatte hat keinen Bootsektor
             }
        //Datei löschen
-    //   befehl = "rm "  + homepath + "/.config/qt5-fsarchiver/sektornummer.txt";;
+       befehl = "rm "  + homepath + "/.config/qt5-fsarchiver/sektornummer.txt";;
        system (befehl.toLatin1().data()); 
        if (sektor_ < 2 && efiflag == 0) {
 	    QMessageBox::about(this, tr("Note", "Hinweis"), tr("The end of hidden area of the 1st Partition could not be read. Only 512 bytes are saved.", "Das Ende des verborgenen Bereiches der 1. Partition konnte nicht ausgelesen werden. Es werden nur 512 Bytes gesichert.\n"));
@@ -373,9 +387,9 @@ int DialogMBR::folder_einlesen() {
    QString partition;
    QString Festplatte;
    int ret = 1; 
-   int pos = 0;
+  // int pos = 0;
    int pos1 = 0;
-   int pos2 = 0;
+ //  int pos2 = 0;
    int i = 0;
    QModelIndex index = treeView->currentIndex();
    QModelIndexList indexes = selModel->selectedIndexes();
@@ -385,8 +399,8 @@ int DialogMBR::folder_einlesen() {
 	Festplatte = folder_.right(3);
    QFileInfo info(folder_); 
    size_ = info.size(); 
-    pos = folder_.indexOf("mbr_sd");
-    pos2 = folder_.indexOf("gpt_sd");
+  //  pos = folder_.indexOf("mbr_sd");
+  //  pos2 = folder_.indexOf("gpt_sd");
    if (folder_ == "" && (dialog_auswertung == 4))
       {
        QMessageBox::about(this, tr("Note", "Hinweis"),

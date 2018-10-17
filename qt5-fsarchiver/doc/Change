@@ -1,6 +1,22 @@
 ===========================================================================================================
 * qt5-fsarchiver: Graphical interface for fsarchiver fsarchiver [http://wiki.ubuntuusers.de/qt4-fsarchiver] 
 ===========================================================================================================
+* qt5-fsarchiver-0.8.5-1 October 5, 2018.
+     - small corrections.
+* qt5-fsarchiver-0.8.5-0 August 31,2018.
+     - Improved support for extfs filesystems (Contribution from Marcos Mello).
+     - Fixed build issue with e2fsprogs < 1.41 (Contribution from Marcos Mello)
+     - Fixed build issue related to xattr.h (Contribution from Lars Wendler)
+     - French translation completed. 
+*  qt5-fsarchiver-0.8.5-0 August 30, 2018.
+     - Improved support for extfs filesystems (Contribution from Marcos Mello).
+     - Fixed build issue with e2fsprogs < 1.41 (Contribution from Marcos Mello).
+     - Fixed build issue related to xattr.h (Contribution from Lars Wendler)
+*  qt5-fsarchiver-0.8.4-7 July 30, 2018.
+     - Bugfix when writing an image of a partition.
+*  qt5-fsarchiver-0.8.4-6 May 30, 2018.
+     - Backups to jfs and xfy partitions is now possible.
+     - Bug fix: System partition while cloning is now detected
 *  qt5-fsarchiver-0.8.4-5 April 30, 2018.
      - gksudo / kdesudo is no longer installed.
      - Changed start symbols without pkexec.

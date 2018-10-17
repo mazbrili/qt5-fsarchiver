@@ -265,7 +265,7 @@
      <rect>
       <x>10</x>
       <y>125</y>
-      <width>411</width>
+      <width>441</width>
       <height>25</height>
      </rect>
     </property>
@@ -274,62 +274,6 @@
     </property>
     <property name="value">
      <number>0</number>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_break">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>120</y>
-      <width>24</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>24</width>
-      <height>21</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>24</width>
-      <height>21</height>
-     </size>
-    </property>
-    <property name="sizeIncrement">
-     <size>
-      <width>24</width>
-      <height>21</height>
-     </size>
-    </property>
-    <property name="baseSize">
-     <size>
-      <width>21</width>
-      <height>21</height>
-     </size>
-    </property>
-    <property name="locale">
-     <locale language="English" country="UnitedStates"/>
-    </property>
-    <property name="text">
-     <string extracomment="Break process"/>
-    </property>
-    <property name="icon">
-     <iconset resource="../icon.qrc">
-      <normaloff>:/src/images/cancel.png</normaloff>:/src/images/cancel.png</iconset>
-    </property>
-    <property name="shortcut">
-     <string/>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLineEdit" name="savedBytes">
@@ -574,7 +518,7 @@
      </rect>
     </property>
     <property name="text">
-     <string extracomment="sdb">Image &amp;of a hard disk to create</string>
+     <string extracomment="sdb">Image of a &amp;hard disk to create</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="rdbt_partition_save">
@@ -587,7 +531,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Image of &amp;a partition to create</string>
+     <string>Image of a partition &amp;to create</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="rdbt_partition_restore">

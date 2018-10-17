@@ -640,6 +640,5 @@ s64 get_device_size(char *partition)
     if ((devsize=lseek64(fd, 0, SEEK_END))<0)
         return -1;
     close(fd);
-
     return devsize;
 }

@@ -160,7 +160,7 @@ MWindow::MWindow()
    //schließt alle Fenster
    //connect( pushButton_end, SIGNAL( clicked() ), qApp, SLOT(quit()));
    connect( pushButton_end, SIGNAL( clicked() ), this, SLOT(del_mediafolder()));
-   connect( pushButton_break, SIGNAL( clicked() ), this, SLOT(esc_end()));
+   //connect( pushButton_break, SIGNAL( clicked() ), this, SLOT(esc_end()));
    //schließt das aktuelle (this)Fenster:
    //connect( pushButton_end, SIGNAL( clicked() ), this, SLOT(close()));	
    connect( pushButton_save, SIGNAL( clicked() ), this, SLOT(savePartition()));
@@ -309,7 +309,7 @@ MWindow::MWindow()
               for (j=0; j < 5; j++){
                  if (PartitionString(i,0) != "") {
                     part[i-1][j] = PartitionString(i,j);
-                    //qDebug() << "part[i][j]:" <<  part[i-1][j] << i << j;
+                   // qDebug() << "part[i][j]:" <<  part[i-1][j] << i << j;
                   }
                }
            } 
@@ -333,11 +333,11 @@ MWindow::MWindow()
                 partition_ = "/dev/"+ partition_; 
                 //Prüfen ob System oder Home Partition
                 part_art = mtab_einlesen(partition_); // Partition übergeben
-                if (!is_mounted(partition_.toLatin1().data()))
+               if (!is_mounted(partition_.toLatin1().data()))
                    { 
                    if (part_art !="system" || part_art != "home")
                      {
-			if (partition_typ == "ext" || partition_typ == "btrfs"|| partition_typ == "vfat" || partition_typ ==  "ntfs" )
+			if (partition_typ == "ext" || partition_typ == "btrfs"|| partition_typ == "vfat" || partition_typ ==  "ntfs" || partition_typ ==  "jfs" || partition_typ ==  "xfs")
                    		{
                    	 	char mountpoint[100] = "/media/";
                          	strcat (mountpoint , part[i][0].toLatin1().data());
@@ -1114,8 +1114,8 @@ void MWindow::folder_file() {
 void MWindow::info() {
    QMessageBox::information(
       0, tr("qt5-fsarchiver"),
-      tr("Backup and restore partitions, directory and MBR.\nversion 0.8.4-5, April 30, 2018",
-         "Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.4-5, 30. April 2018"));
+      tr("Backup and restore partitions, directory and MBR.\nversion 0.8.5-1, October 5, 2018",
+         "Sichern und Wiederherstellen von Partitionen, Verzeichnissen und MBR Version 0.8.5-1, 5. Oktober 2018"));
       }
 
 int MWindow::Root_Auswertung(){

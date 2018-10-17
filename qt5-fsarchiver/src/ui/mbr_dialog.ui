@@ -120,9 +120,9 @@ Backup / restore:</string>
   <widget class="QComboBox" name="cmb_disk">
    <property name="geometry">
     <rect>
-     <x>397</x>
+     <x>357</x>
      <y>420</y>
-     <width>51</width>
+     <width>91</width>
      <height>27</height>
     </rect>
    </property>
@@ -130,15 +130,15 @@ Backup / restore:</string>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>305</x>
+     <x>280</x>
      <y>410</y>
-     <width>81</width>
+     <width>71</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>&amp;Existing
-harddrive:</string>
+    <string>Existing
+&amp;harddrive:</string>
    </property>
    <property name="buddy">
     <cstring>cmb_disk</cstring>

@@ -107,7 +107,7 @@ setupUi(this); // this sets up GUI
    	connect( rdBt_restoreFsArchiv, SIGNAL( clicked() ), this, SLOT(rdButton_auslesen())); 
         connect( pushButton_partition, SIGNAL( clicked() ), this, SLOT(listWidget_auslesen()));
         connect( pushButton_folder_free, SIGNAL( clicked() ), this, SLOT(listWidget_folder_free_auslesen()));
-        connect( pushButton_break, SIGNAL( clicked() ), this, SLOT(esc_end()));
+        //connect( pushButton_break, SIGNAL( clicked() ), this, SLOT(esc_end()));
         connect( chk_key, SIGNAL( clicked() ), this, SLOT(chkkey()));
         connect( bt_net_art, SIGNAL( clicked() ), this, SLOT(cmb_net()));
         connect( bt_toParent, SIGNAL( clicked() ), this, SLOT(button_toParent()));
@@ -347,7 +347,6 @@ void DialogNet:: Daten_NFS_eintragen()
    	key_net = netein.key_holen();
         //freigegebene Ordner ermitteln
         int i = nfs_search_folder_free(rechner_IP); 
-qDebug() << "Rechner IP" << rechner_IP;
    	if ( i==1){
         	QMessageBox::about(this,tr("Note", "Hinweis"),
         tr("Can not find a shared directory with the NFS Protokoll.\n", "Mit dem NFS Protokoll wurde kein freigegebenes Verzeichnis gefunden.\n"));
@@ -1177,7 +1176,7 @@ int net_art = cmb_Net->currentIndex();
        //Verzeichnis mounten
        this->setCursor(Qt::WaitCursor);
        befehl = "umount " + homepath + "/.qt5-fs-client 2>/dev/null";
-       k = system (befehl.toLatin1().data()); 
+       k = system (befehl.toLatin1().data());
        befehl = "mount -t cifs -o username=" + user_net + ",password=" + key_net + ",uid=0,gid=0 //" + rechner_IP + "/'" + folder_free + "' " + homepath + "/.qt5-fs-client" ;
        k = system (befehl.toLatin1().data()); 
        this->setCursor(Qt::ArrowCursor); 

@@ -1,6 +1,6 @@
 /*
  * fsarchiver: Filesystem Archiver
- * 
+ *
  * Copyright (C) 2008-2018 Francois Dupoux.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or
@@ -29,7 +29,8 @@
 #include <sys/param.h>
 #include <sys/statvfs.h>
 #include <sys/stat.h>
-#include <attr/xattr.h>
+#include <sys/xattr.h>
+#include <errno.h>
 #include <zlib.h>
 #include <assert.h>
 #include <gcrypt.h>
@@ -59,6 +60,10 @@
 #include "error.h"
 #include "queue.h"
 #include "connect_c_cpp.h"
+
+#ifndef ENOATTR
+#define ENOATTR ENODATA
+#endif
 
 typedef struct s_savear
 {   carchwriter ai;
@@ -351,11 +356,11 @@ int createar_item_winattr(csavear *save, char *root, char *relpath, struct stat6
         errno=0;
         if ((attrsize=lgetxattr(fullpath, winattr[i], NULL, 0)) < 0) // get the size of the attribute
         {
-        	   if (errno!=ENOATTR ) 
+            if (errno!=ENOATTR ) 
                 errno = 61; 
             if (errno!=ENOATTR)
             {
-            	 sysprintf("           winattr:lgetxattr(%s,%s): returned negative attribute size\n", relpath, winattr[i]); // output if there are any other error
+                sysprintf("           winattr:lgetxattr(%s,%s): returned negative attribute size\n", relpath, winattr[i]); // output if there are any other error
                 ret=-1;
             }
             continue; // ignore the current xattr
@@ -419,13 +424,12 @@ int createar_item_stdattr(csavear *save, char *root, char *relpath, struct stat6
     *objtype=OBJTYPE_NULL;
     *filecost=FSA_COST_PER_FILE; // fixed cost per file
     concatenate_paths(fullpath, sizeof(fullpath), root, relpath);
-    if (meldeflag  == 0) { 
-           // Anzeige im Terminal 
-           printf ("Es müssen insgesamt %.5lld  Verzeichnisse bzw. Dateien gesichert werden.\r", (long long)save->objectid);
+    	 printf ("Es müssen insgesamt %.5lld  Verzeichnisse bzw. Dateien gesichert werden.\r", (long long)save->objectid); 
+         if (meldeflag  == 0) {
             anzahlfile = save->objectid; 
             werte_uebergeben(anzahlfile,2); 
-            } 
-    	if (meldeflag  == 1 ) { 
+            }
+           	if (meldeflag  == 1 ) { 
             // Anzeige im Terminal 
            //if (save->objectid == 1) 
            //    printf("\n");   
@@ -436,7 +440,8 @@ int createar_item_stdattr(csavear *save, char *root, char *relpath, struct stat6
            werte_uebergeben(progress,1); 
            anzahlfile = save->objectid; 
            werte_uebergeben(anzahlfile,3); 
-       }
+         }
+    
     msgprintf(MSG_DEBUG2, "Adding [%.5lld]=[%s]\n", (long long)save->objectid, relpath);
     if (dico_add_u64(d, DICO_OBJ_SECTION_STDATTR, DISKITEMKEY_OBJECTID, (u64)(save->objectid)++)!=0)
     {   errprintf("dico_add_u64(DICO_OBJ_SECTION_STDATTR) failed\n");
@@ -947,7 +952,7 @@ int filesystem_mount_partition(cdevinfo *devinfo, cdico *dicofsinfo, u16 fsid)
     int count;
     int res;
     int i;
-    meldeflag = 0;
+    int meldeflag = 0;
     
     res=generic_get_mntinfo(devinfo->devpath, &readwrite, curmntdir, sizeof(curmntdir), optbuf, sizeof(optbuf), fsbuf, sizeof(fsbuf));
     if (res==0) // partition is already mounted
@@ -1060,12 +1065,12 @@ int filesystem_mount_partition(cdevinfo *devinfo, cdico *dicofsinfo, u16 fsid)
         devinfo->fstype=tmptype;
         devinfo->mountedbyfsa=true;
     }
-/*
+
     // Make sure users are aware if they save filesystems with experimental support in fsarchiver
-    if ((g_options.experimental==false) && (filesys[devinfo->fstype].stable==false))
-    {   errprintf("You must enable support for experimental features in order to save %s filesystems with fsarchiver.\n", filesys[devinfo->fstype].name);
-        return -1;
-    } */
+  //  if ((g_options.experimental==false) && (filesys[devinfo->fstype].stable==false))
+ //   {   errprintf("You must enable support for experimental features in order to save %s filesystems with fsarchiver.\n", filesys[devinfo->fstype].name);
+      //  return -1;
+   // }
 
     // Make sure support for extended attributes is enabled if this filesystem supports it
     if (g_options.dontcheckmountopts==false)
@@ -1213,7 +1218,7 @@ int oper_save(char *archive, int argc, char **argv, int archtype)
         dicofsinfo[i]=NULL;
     }
     
-   // check that arguments are all block devices when archtype==ARCHTYPE_FILESYSTEMS
+    // check that arguments are all block devices when archtype==ARCHTYPE_FILESYSTEMS
     for (i=0; (archtype==ARCHTYPE_FILESYSTEMS) && (i < argc) && (argv[i]!=NULL); i++)
     {
         if ((stat64(argv[i], &st)!=0) || (!S_ISBLK(st.st_mode)))
@@ -1338,13 +1343,10 @@ int oper_save(char *archive, int argc, char **argv, int archtype)
     // init counters to zero before real savefs/savedir
     save.cost_current=0;
     save.objectid=0;
-//printf("Meldeflag  vor Umschaltung 1 %d...\n", meldeflag);
     meldeflag = 1;
-//printf("Meldedeflag nach Umschaltung %d...\n", meldeflag);
 	// Anzeige im Terminal 
 	printf("\n"); 
-	printf("[ Anzahl Dateien  prozentualer Anteil\n]  ");
-    
+	printf("[ Anzahl Dateien  prozentualer Anteil ]  \n");
     // copy contents to archive
     switch (archtype)
     {
@@ -1439,5 +1441,3 @@ do_create_success:
     archwriter_destroy(&save.ai);
     return ret;
 }
-
-

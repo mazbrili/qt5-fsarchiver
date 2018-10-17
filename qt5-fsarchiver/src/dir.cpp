@@ -62,7 +62,7 @@ DialogDIR::DialogDIR(QWidget *parent)
         connect( chk_path, SIGNAL( clicked() ), this, SLOT( treeview_show() ) );
         connect( bt_end, SIGNAL( clicked() ), this, SLOT(close()));
         connect( chk_key, SIGNAL( clicked() ), this, SLOT(chkkey()));
-        connect( pushButton_break, SIGNAL( clicked() ), this, SLOT( esc_end() ) ); 
+        //connect( pushButton_break, SIGNAL( clicked() ), this, SLOT( esc_end() ) ); 
         connect( chk_hidden, SIGNAL( clicked() ), this, SLOT(chkhidden()));
         connect( pushButton_zstd_dir, SIGNAL( clicked() ), this, SLOT(zip_einlesen_dir()));
         timer = new QTimer(this);

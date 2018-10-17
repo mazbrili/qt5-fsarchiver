@@ -62,7 +62,7 @@ DialogClone::DialogClone(QWidget *parent)
         connect( rdbt_image_restore, SIGNAL( clicked() ), this, SLOT(rdbutton_image_restore() ) ); 
         connect( rdbt_partition_save, SIGNAL( clicked() ), this, SLOT(rdbutton_partition_image_save() ) ); 
         connect( rdbt_partition_restore, SIGNAL( clicked() ), this, SLOT(rdbutton_partition_image_restore() ) ); 
-        connect( pushButton_break, SIGNAL( clicked() ), this, SLOT(esc_end()));
+        //connect( pushButton_break, SIGNAL( clicked() ), this, SLOT(esc_end()));
         connect( bt_end, SIGNAL( clicked() ), this, SLOT(close()));
         connect( pushButton_folder, SIGNAL( clicked() ), this, SLOT(folder_einlesen()));
         connect( pushButton_partition, SIGNAL( clicked() ), this, SLOT(listWidget_auslesen()));
@@ -99,7 +99,6 @@ QString disk_clone[50];
 QStringList disk_kurz;
 int  i = 0, j=0 ,k=0, m=0;
 int pos;
-//float  dummy1;
 QString dummy;
         QString filename = homepath + "/.config/qt5-fsarchiver/disk.txt";
 	QFile file(filename);
@@ -145,7 +144,6 @@ QString dummy;
            listWidget_exist->addItem (disk_clone[i]);
  
        }
-        
 }
 
 void DialogClone::addWidget() {
@@ -214,8 +212,7 @@ Qt::CheckState state;
                    }
                 else 
                 	startThread1(0);
-                qDebug() << "The image is created";
-               }
+                }
     return 0;
 }
 
@@ -287,8 +284,7 @@ Qt::CheckState state;
 			}
                 else 
                 	startThread2(0);
-                qDebug() << "The image is written back";
-    	}
+               	}
                 
     return 0;
 }
@@ -414,7 +410,7 @@ Qt::CheckState state;
 			startThread1(1);}
                 else 
                 	startThread1(0);
-                qDebug() << "The image is created";
+               
                }
     return 0;
 }
@@ -494,7 +490,7 @@ QString disk_name;
 			}
                 else 
                 	startThread2(0);
-                qDebug() << "The image is written back";
+               
     	}
                 
     return 0;
@@ -626,31 +622,35 @@ int DialogClone::mountpoint(QString partition)
    QString text;
    QFile file("/etc/mtab");
    QTextStream ds(&file);
-   int pos, pos1;
+   int pos, pos1, pos2;
    int line = 0;
-   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        text = ds.readLine();
-        // hier wird die ersten Zeile der mtab überprüft
-	pos = text.indexOf(partition);
-        if (pos > -1)  // root-Partition gefunden gefunden
-      	     { 
-                file.close();
-		return 1;												
-       	     }
-	while (!ds.atEnd())
-      	{
-	     line++;
-             text = ds.readLine();
-             pos = text.indexOf("/home"); 
-             if (pos > -1) { // home Partition gefunden
-                 pos1 = text.indexOf(partition); 
-                 if (pos1 > -1)
-      	     		{ 
-               		file.close();
-               		return 1;
-       	    		}
+   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) 
+      {
+       text = ds.readLine();     
+	   while (!ds.atEnd())
+     	{
+         line++;
+         pos = text.indexOf("/home"); 
+         pos2 = text.indexOf(" / ");
+           if (pos > -1) { // home Partition gefunden
+             pos1 = text.indexOf(partition); 
+             if (pos1 > -1)
+      	  		{ 
+           		file.close();
+           		return 1;
+       	  		}
+      	   } 
+            if (pos2 > -1) { // sys Partition gefunden
+               pos1 = text.indexOf(partition); 
+               if (pos1 > -1)
+      	   	{ 
+              		file.close();
+              		return 1;
+       	   	}
       		} 
-	     } }
+              text = ds.readLine();
+ 	    } 
+     }
 	     file.close();
    	    return 0; 
 }
@@ -1153,16 +1153,13 @@ int pos = 0;
 	     bytes_ = ds.readLine();
       	} }
    	file.close();
-        if (bytes_ != ""){
+        if (bytes_ != "0"){
            bytes = bytes_.split(" ") ;
            bytes_ = bytes[0];
            bytes_ =  bytes_.left( bytes_.size() -6);
            read_write_space_sum = (bytes_.toInt()/ sekunde_summe_clone);}
-        if (bytes_ != ""){
-           read_write_space_sec = bytes[7];
-           pos = read_write_space_sec.indexOf(".");
-       	  read_write_space_sec = read_write_space_sec.left(pos+1);
-           }
+        if (bytes_ != "0")
+           read_write_space_sec = bytes[9];
 }
 
 
